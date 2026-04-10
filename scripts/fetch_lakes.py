@@ -6,9 +6,7 @@ Pulls water quality data for sentinel alpine lakes across the
 Sierra Nevada and Cascades.
 
 Data source: USGS Water Quality Portal via dataretrieval-python
-  Uses the official USGS Python package which handles endpoint
-  routing, retries, and content negotiation automatically.
-  Legacy endpoint (/data/) covers all pre-2024 EPA/state data.
+  wqp.get_results() with explicit bBox kwarg format.
 
 Brooks Groves · bdgroves/alpine-watch
 """
@@ -22,9 +20,6 @@ import dataretrieval.wqp as wqp
 import pandas as pd
 import numpy as np
 
-# ─────────────────────────────────────────────────────────────
-# SENTINEL LAKE REGISTRY
-# ─────────────────────────────────────────────────────────────
 LAKES = [
     {
         "id": "lake_tahoe",
@@ -170,30 +165,31 @@ START_DATE = "2019-01-01"
 
 def fetch_lake(lake: dict) -> pd.DataFrame:
     """
-    Fetch water quality data for one lake using dataretrieval-python.
-    Queries one characteristic at a time to avoid server overload.
-    Returns combined DataFrame or empty DataFrame.
+    Fetch water quality data for one lake.
+    Passes bBox as a comma-separated string — the format WQP expects.
     """
     lat, lon = lake["lat"], lake["lon"]
-    bbox = (lon - 0.05, lat - 0.05, lon + 0.05, lat + 0.05)
-    frames = []
+    # WQP bBox format: "W-lon,S-lat,E-lon,N-lat"
+    bbox_str = f"{lon-0.05:.4f},{lat-0.05:.4f},{lon+0.05:.4f},{lat+0.05:.4f}"
 
+    frames = []
     for char in CHARACTERISTICS:
         try:
             df, _ = wqp.get_results(
-                bBox=bbox,
-                characteristicName=char,
-                startDateLo=START_DATE,
+                **{
+                    "bBox": bbox_str,
+                    "characteristicName": char,
+                    "startDateLo": START_DATE,
+                }
             )
             if df is not None and not df.empty:
                 frames.append(df)
                 print(f"    [{char}]: {len(df)} records")
             else:
                 print(f"    [{char}]: 0 records")
-            time.sleep(1.5)  # respect rate limits
         except Exception as e:
             print(f"    [{char}] ERROR: {e}")
-            time.sleep(2.0)
+        time.sleep(1.5)
 
     if not frames:
         print(f"  {lake['name']}: 0 records total")
@@ -224,7 +220,7 @@ def parse_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
     org_col  = get_col(["OrganizationIdentifier"])
 
     if not val_col or not char_col or not date_col:
-        print(f"  WARNING: missing columns for {lake_id}, got: {list(df.columns[:8])}")
+        print(f"  WARNING: missing columns for {lake_id}: {list(df.columns[:8])}")
         return []
 
     parsed = []
@@ -329,19 +325,18 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ALPINE-WATCH  //  fetch_lakes.py")
     print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
-    print(f"  Source: dataretrieval-python / USGS WQP")
+    print(f"  Source: dataretrieval-python / USGS WQP legacy endpoint")
     print(f"{'='*60}\n")
 
     os.makedirs("docs/data", exist_ok=True)
-
     all_summaries, lake_detail = [], {}
 
     for lake in LAKES:
         print(f"── {lake['name']} ({lake['state']}) ──")
-        df       = fetch_lake(lake)
-        obs      = parse_df(df, lake["id"])
-        summary  = compute_summary(obs, lake)
-        ts       = build_timeseries(obs)
+        df      = fetch_lake(lake)
+        obs     = parse_df(df, lake["id"])
+        summary = compute_summary(obs, lake)
+        ts      = build_timeseries(obs)
         all_summaries.append(summary)
         lake_detail[lake["id"]] = {"summary": summary, "chlorophyll_timeseries": ts}
         time.sleep(2.0)
