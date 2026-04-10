@@ -7,7 +7,9 @@ Sierra Nevada and Cascades.
 
 Data source: USGS Water Quality Portal WQX 3.0
   Endpoint: waterqualitydata.us/wqx3/Result/search
-  Format:   CSV only (JSON not supported on wqx3 endpoint)
+  Format:   CSV only
+  Strategy: One characteristic per request (pipe-delimited lists
+            cause 500 errors on the wqx3 endpoint)
 
 Brooks Groves · bdgroves/alpine-watch
 """
@@ -160,19 +162,16 @@ LAKES = [
 
 # ─────────────────────────────────────────────────────────────
 # WQX 3.0 API CONFIG
-# JSON not supported on wqx3 — must use mimeType=csv
-# Do NOT send Accept: application/json header
+# One characteristic per request — pipe-delimited lists cause 500s
 # ─────────────────────────────────────────────────────────────
 WQP_BASE = "https://www.waterqualitydata.us/wqx3/Result/search"
 
+# Queried individually, not as a combined list
 WQP_CHARACTERISTICS = [
     "Chlorophyll a",
-    "Chlorophyll a (probe relative fluorescence)",
     "Depth, Secchi disk depth",
     "Temperature, water",
     "Phosphorus",
-    "Inorganic nitrogen (nitrate and nitrite)",
-    "Turbidity",
 ]
 
 LOOKBACK_DAYS = 365 * 5
@@ -182,10 +181,10 @@ WQP_HEADERS = {
 }
 
 
-def fetch_wqp_data(lake: dict) -> pd.DataFrame:
+def fetch_one_characteristic(lake: dict, characteristic: str) -> pd.DataFrame:
     """
-    Query WQX 3.0 endpoint by bounding box. Returns DataFrame of results.
-    Uses mimeType=csv — the only format supported by the wqx3 endpoint.
+    Query WQX 3.0 for a single lake + single characteristic.
+    Returns DataFrame or empty DataFrame on error.
     """
     start_date = (datetime.now() - timedelta(days=LOOKBACK_DAYS)).strftime("%m-%d-%Y")
     lat, lon = lake["lat"], lake["lon"]
@@ -193,67 +192,92 @@ def fetch_wqp_data(lake: dict) -> pd.DataFrame:
 
     params = {
         "bBox": bbox,
-        "characteristicName": "|".join(WQP_CHARACTERISTICS),
+        "characteristicName": characteristic,
         "startDateLo": start_date,
-        "mimeType": "csv",           # CSV only on wqx3
+        "mimeType": "csv",
         "zip": "no",
         "dataProfile": "narrowResult",
-        "providers": ["NWIS", "STORET"],
     }
 
     try:
-        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=90)
+        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=60)
         resp.raise_for_status()
-
         df = pd.read_csv(StringIO(resp.text), low_memory=False)
-        print(f"  WQP {lake['name']}: {len(df)} records")
         return df
-
     except Exception as e:
-        print(f"  WQP {lake['name']} ERROR: {e}")
+        print(f"    [{characteristic}] ERROR: {e}")
         return pd.DataFrame()
+
+
+def fetch_wqp_data(lake: dict) -> pd.DataFrame:
+    """
+    Fetch all characteristics for one lake, one request each.
+    Concatenates results into a single DataFrame.
+    """
+    frames = []
+    total = 0
+    for char in WQP_CHARACTERISTICS:
+        df = fetch_one_characteristic(lake, char)
+        if not df.empty:
+            frames.append(df)
+            total += len(df)
+        time.sleep(0.5)  # polite gap between characteristic requests
+
+    if not frames:
+        print(f"  {lake['name']}: 0 records")
+        return pd.DataFrame()
+
+    combined = pd.concat(frames, ignore_index=True)
+    print(f"  {lake['name']}: {total} records across {len(frames)} characteristics")
+    return combined
 
 
 def parse_wqp_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
     """
     Normalize WQP CSV DataFrame into tidy observation list.
-    Handles column name variants across WQX versions.
+    Flexible column detection for WQX version differences.
     """
     if df.empty:
         return []
 
-    # Normalize column names — strip whitespace, lowercase for matching
-    col_map = {c.strip(): c for c in df.columns}
+    cols = list(df.columns)
+
     def get_col(candidates):
         for c in candidates:
-            if c in col_map:
-                return col_map[c]
+            if c in cols:
+                return c
+        # case-insensitive fallback
+        cols_lower = {x.lower(): x for x in cols}
+        for c in candidates:
+            if c.lower() in cols_lower:
+                return cols_lower[c.lower()]
         return None
 
     val_col  = get_col(["ResultMeasureValue", "result_measure_value"])
-    unit_col = get_col(["ResultMeasure/MeasureUnitCode", "result_measure_unit_code", "MeasureUnitCode"])
+    unit_col = get_col(["ResultMeasure/MeasureUnitCode", "MeasureUnitCode", "result_measure_unit_code"])
     char_col = get_col(["CharacteristicName", "characteristic_name"])
     date_col = get_col(["ActivityStartDate", "activity_start_date"])
     org_col  = get_col(["OrganizationIdentifier", "organization_identifier"])
 
     if not val_col or not char_col or not date_col:
-        print(f"  WARNING: Unexpected columns for {lake_id}: {list(df.columns[:10])}")
+        print(f"  WARNING: Missing expected columns for {lake_id}")
+        print(f"  Available: {cols[:15]}")
         return []
 
     parsed = []
     for _, row in df.iterrows():
         try:
             val_str = str(row.get(val_col, "")).strip()
-            if val_str in ("", "nan", "None", "ND"):
+            if val_str in ("", "nan", "None", "ND", "NaN"):
                 continue
             val = float(val_str)
             parsed.append({
-                "lake_id":       lake_id,
-                "date":          str(row.get(date_col, "")),
+                "lake_id":        lake_id,
+                "date":           str(row.get(date_col, "")),
                 "characteristic": str(row.get(char_col, "")),
-                "value":         val,
-                "unit":          str(row.get(unit_col, "")) if unit_col else "",
-                "org":           str(row.get(org_col, "")) if org_col else "",
+                "value":          val,
+                "unit":           str(row.get(unit_col, "")) if unit_col else "",
+                "org":            str(row.get(org_col, "")) if org_col else "",
             })
         except (ValueError, TypeError):
             continue
@@ -340,7 +364,7 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ALPINE-WATCH  //  fetch_lakes.py")
     print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
-    print(f"  Endpoint: WQX 3.0 CSV  ({WQP_BASE})")
+    print(f"  Endpoint: WQX 3.0 CSV (one characteristic per request)")
     print(f"{'='*60}\n")
 
     os.makedirs("docs/data", exist_ok=True)
@@ -355,7 +379,7 @@ def main():
         ts       = build_chlorophyll_timeseries(obs)
         all_summaries.append(summary)
         lake_detail[lake["id"]] = {"summary": summary, "chlorophyll_timeseries": ts}
-        time.sleep(1.0)
+        time.sleep(1.0)  # gap between lakes
 
     meta = {
         "updated_utc": datetime.now(timezone.utc).isoformat(),
