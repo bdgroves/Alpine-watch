@@ -8,7 +8,7 @@
     "lat": 37.5896,
     "lon": -118.8577,
     "notes": "High-alpine; benchmarked against pristine baselines",
-    "status": "no_data",
+    "status": "ok",
     "alert_level": 0,
     "alert_label": "WATCH",
     "chlorophyll_latest": null,
@@ -17,12 +17,12 @@
     "secchi_latest": null,
     "secchi_unit": "m",
     "secchi_trend": null,
-    "temp_latest": null,
+    "temp_latest": 4.3,
     "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
+    "phosphorus_latest": 0.04,
     "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
+    "last_sample_date": "2022-10-18",
+    "sample_count": 36
   },
   "chlorophyll_timeseries": []
 }

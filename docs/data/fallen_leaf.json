@@ -8,7 +8,7 @@
     "lat": 38.8968,
     "lon": -120.0574,
     "notes": "Tahoe-adjacent; sensitive canary for basin nutrient loading",
-    "status": "no_data",
+    "status": "ok",
     "alert_level": 0,
     "alert_label": "WATCH",
     "chlorophyll_latest": null,
@@ -17,12 +17,12 @@
     "secchi_latest": null,
     "secchi_unit": "m",
     "secchi_trend": null,
-    "temp_latest": null,
+    "temp_latest": 24.0,
     "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
+    "phosphorus_latest": 0.041,
     "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
+    "last_sample_date": "2025-06-20",
+    "sample_count": 45
   },
   "chlorophyll_timeseries": []
 }

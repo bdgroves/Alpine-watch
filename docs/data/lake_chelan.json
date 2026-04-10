@@ -8,21 +8,21 @@
     "lat": 47.8418,
     "lon": -120.0245,
     "notes": "One of deepest lakes in North America; exceptional clarity baseline",
-    "status": "no_data",
+    "status": "ok",
     "alert_level": 0,
     "alert_label": "WATCH",
     "chlorophyll_latest": null,
     "chlorophyll_unit": "\u00b5g/L",
     "chlorophyll_trend": null,
-    "secchi_latest": null,
+    "secchi_latest": 28.0,
     "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": null,
+    "secchi_trend": "insufficient_data",
+    "temp_latest": 19.6,
     "temp_unit": "\u00b0C",
     "phosphorus_latest": null,
     "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
+    "last_sample_date": "2022-09-27",
+    "sample_count": 6
   },
   "chlorophyll_timeseries": []
 }

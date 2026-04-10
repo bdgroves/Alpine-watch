@@ -8,21 +8,202 @@
     "lat": 43.5568,
     "lon": -122.0054,
     "notes": "High-elevation Cascade lake; oligotrophic benchmark",
-    "status": "no_data",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
+    "status": "ok",
+    "alert_level": 2,
+    "alert_label": "ELEVATED",
+    "chlorophyll_latest": 5.2,
     "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
+    "chlorophyll_trend": "falling",
+    "secchi_latest": 6.1,
     "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": null,
+    "secchi_trend": "rising",
+    "temp_latest": 11.8,
     "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
+    "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
+    "last_sample_date": "2025-10-21",
+    "sample_count": 7827
   },
-  "chlorophyll_timeseries": []
+  "chlorophyll_timeseries": [
+    {
+      "month": "2019-06",
+      "chl": 3.338
+    },
+    {
+      "month": "2019-07",
+      "chl": 15.533
+    },
+    {
+      "month": "2019-08",
+      "chl": 2.05
+    },
+    {
+      "month": "2019-09",
+      "chl": 4.286
+    },
+    {
+      "month": "2020-04",
+      "chl": 2.2
+    },
+    {
+      "month": "2020-05",
+      "chl": 1.232
+    },
+    {
+      "month": "2020-06",
+      "chl": 0.7
+    },
+    {
+      "month": "2020-07",
+      "chl": 4.175
+    },
+    {
+      "month": "2020-08",
+      "chl": 0.519
+    },
+    {
+      "month": "2020-09",
+      "chl": 1.063
+    },
+    {
+      "month": "2020-10",
+      "chl": 1.345
+    },
+    {
+      "month": "2021-04",
+      "chl": 5.25
+    },
+    {
+      "month": "2021-05",
+      "chl": 4.229
+    },
+    {
+      "month": "2021-06",
+      "chl": 0.6
+    },
+    {
+      "month": "2021-07",
+      "chl": 1.686
+    },
+    {
+      "month": "2021-08",
+      "chl": 0.9
+    },
+    {
+      "month": "2021-09",
+      "chl": 1.05
+    },
+    {
+      "month": "2021-10",
+      "chl": 2.0
+    },
+    {
+      "month": "2022-04",
+      "chl": 2.2
+    },
+    {
+      "month": "2022-05",
+      "chl": 2.6
+    },
+    {
+      "month": "2022-06",
+      "chl": 0.883
+    },
+    {
+      "month": "2022-07",
+      "chl": 0.675
+    },
+    {
+      "month": "2022-08",
+      "chl": 1.425
+    },
+    {
+      "month": "2022-09",
+      "chl": 4.567
+    },
+    {
+      "month": "2022-10",
+      "chl": 6.6
+    },
+    {
+      "month": "2023-04",
+      "chl": 0.85
+    },
+    {
+      "month": "2023-05",
+      "chl": 1.6
+    },
+    {
+      "month": "2023-06",
+      "chl": 0.5
+    },
+    {
+      "month": "2023-07",
+      "chl": 1.45
+    },
+    {
+      "month": "2023-08",
+      "chl": 2.425
+    },
+    {
+      "month": "2023-09",
+      "chl": 1.875
+    },
+    {
+      "month": "2023-10",
+      "chl": 1.15
+    },
+    {
+      "month": "2024-04",
+      "chl": 1.8
+    },
+    {
+      "month": "2024-05",
+      "chl": 1.15
+    },
+    {
+      "month": "2024-06",
+      "chl": 0.933
+    },
+    {
+      "month": "2024-07",
+      "chl": 0.3
+    },
+    {
+      "month": "2024-08",
+      "chl": 1.27
+    },
+    {
+      "month": "2024-09",
+      "chl": 3.1
+    },
+    {
+      "month": "2024-10",
+      "chl": 4.967
+    },
+    {
+      "month": "2025-05",
+      "chl": 1.1
+    },
+    {
+      "month": "2025-06",
+      "chl": 1.0
+    },
+    {
+      "month": "2025-07",
+      "chl": 2.462
+    },
+    {
+      "month": "2025-08",
+      "chl": 11.267
+    },
+    {
+      "month": "2025-09",
+      "chl": 1.75
+    },
+    {
+      "month": "2025-10",
+      "chl": 3.967
+    }
+  ]
 }
