@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "mono_lake",
+    "name": "Mono Lake",
+    "range": "Eastern Sierra",
+    "state": "CA",
+    "elevation_ft": 6383,
+    "lat": 37.9799,
+    "lon": -119.0198,
+    "notes": "Saline terminal lake; water level + salinity are primary indicators",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

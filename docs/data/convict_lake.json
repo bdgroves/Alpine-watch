@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "convict_lake",
+    "name": "Convict Lake",
+    "range": "Sierra Nevada",
+    "state": "CA",
+    "elevation_ft": 7583,
+    "lat": 37.5896,
+    "lon": -118.8577,
+    "notes": "High-alpine; benchmarked against pristine baselines",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

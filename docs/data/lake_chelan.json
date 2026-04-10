@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "lake_chelan",
+    "name": "Lake Chelan",
+    "range": "North Cascades",
+    "state": "WA",
+    "elevation_ft": 1086,
+    "lat": 47.8418,
+    "lon": -120.0245,
+    "notes": "One of deepest lakes in North America; exceptional clarity baseline",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

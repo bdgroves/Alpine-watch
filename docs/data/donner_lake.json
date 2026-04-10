@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "donner_lake",
+    "name": "Donner Lake",
+    "range": "Sierra Nevada",
+    "state": "CA",
+    "elevation_ft": 5936,
+    "lat": 39.3196,
+    "lon": -120.2296,
+    "notes": "Recreation pressure + highway runoff; historical eutrophication",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

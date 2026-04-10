@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "fallen_leaf",
+    "name": "Fallen Leaf Lake",
+    "range": "Sierra Nevada",
+    "state": "CA",
+    "elevation_ft": 6377,
+    "lat": 38.8968,
+    "lon": -120.0574,
+    "notes": "Tahoe-adjacent; sensitive canary for basin nutrient loading",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}
