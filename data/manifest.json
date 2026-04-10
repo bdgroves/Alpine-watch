@@ -1,6 +1,6 @@
 {
-  "last_run": "2026-04-10T02:08:05.216542+00:00",
+  "last_run": "2026-04-10T02:16:07.989219+00:00",
   "status": "success",
   "lakes_fetched": 13,
-  "source": "USGS WQP"
+  "source": "USGS WQP WQX 3.0"
 }
