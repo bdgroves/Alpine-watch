@@ -17,7 +17,6 @@ Brooks Groves · bdgroves/alpine-watch
 
 import json
 import os
-import sys
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -207,6 +206,12 @@ WQP_CHARACTERISTICS = [
 ]
 LOOKBACK_DAYS = 365 * 5  # 5 years of history
 
+# WQP requires a proper User-Agent or it returns 406
+WQP_HEADERS = {
+    "User-Agent": "alpine-watch/1.0 (https://github.com/bdgroves/Alpine-watch; bdgroves@github)",
+    "Accept": "application/json",
+}
+
 
 def fetch_wqp_data(lake: dict) -> list[dict]:
     """
@@ -229,7 +234,7 @@ def fetch_wqp_data(lake: dict) -> list[dict]:
     }
 
     try:
-        resp = requests.get(WQP_BASE, params=params, timeout=30)
+        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=60)
         resp.raise_for_status()
         records = resp.json()
         print(f"  WQP {lake['name']}: {len(records)} records")
@@ -286,12 +291,17 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
             "notes": lake["notes"],
             "status": "no_data",
             "alert_level": 0,
+            "alert_label": "WATCH",
             "chlorophyll_latest": None,
+            "chlorophyll_unit": "µg/L",
             "chlorophyll_trend": None,
             "secchi_latest": None,
+            "secchi_unit": "m",
             "secchi_trend": None,
             "temp_latest": None,
+            "temp_unit": "°C",
             "phosphorus_latest": None,
+            "phosphorus_unit": "mg/L",
             "last_sample_date": None,
             "sample_count": 0,
         }
@@ -301,13 +311,12 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
     df = df.dropna(subset=["date"]).sort_values("date")
 
     def latest_and_trend(char_key: str):
-        """Return (latest_value, trend_slope) for a characteristic."""
+        """Return (latest_value, trend) for a characteristic."""
         subset = df[df["characteristic"].str.contains(char_key, case=False, na=False)]
         if subset.empty:
             return None, None
         latest = subset.iloc[-1]["value"]
         if len(subset) >= 4:
-            # Simple linear slope over recent observations
             x = np.arange(len(subset))
             slope = np.polyfit(x, subset["value"].values, 1)[0]
             trend = "rising" if slope > 0.01 else ("falling" if slope < -0.01 else "stable")
@@ -334,7 +343,7 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
             alert = max(alert, 1)
     if chl_trend == "rising":
         alert = max(alert, 1)
-    if sec_val is not None and sec_val < 3:  # <3m Secchi = turbid
+    if sec_val is not None and sec_val < 3:
         alert = max(alert, 2)
 
     alert_labels = {0: "WATCH", 1: "CAUTION", 2: "ELEVATED", 3: "CRITICAL"}
@@ -411,7 +420,7 @@ def main():
             "chlorophyll_timeseries": timeseries,
         }
 
-        time.sleep(0.5)  # polite rate limiting
+        time.sleep(1.0)  # polite rate limiting
 
     # ── Write lakes.json (dashboard overview) ─────────────────
     meta = {
