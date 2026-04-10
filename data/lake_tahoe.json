@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "lake_tahoe",
+    "name": "Lake Tahoe",
+    "range": "Sierra Nevada",
+    "state": "CA/NV",
+    "elevation_ft": 6225,
+    "lat": 39.0968,
+    "lon": -120.0324,
+    "notes": "Iconic clarity barometer; decades of Secchi depth records",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

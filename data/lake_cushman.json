@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "lake_cushman",
+    "name": "Lake Cushman",
+    "range": "Olympics",
+    "state": "WA",
+    "elevation_ft": 738,
+    "lat": 47.4685,
+    "lon": -123.2785,
+    "notes": "Olympic Peninsula reservoir; lower-elevation comparison site",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

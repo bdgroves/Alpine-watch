@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "diablo_lake",
+    "name": "Diablo Lake",
+    "range": "North Cascades",
+    "state": "WA",
+    "elevation_ft": 1201,
+    "lat": 48.7154,
+    "lon": -121.1376,
+    "notes": "Brilliant glacier-flour turquoise; color shift = glacial health signal",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

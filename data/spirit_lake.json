@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "spirit_lake",
+    "name": "Spirit Lake",
+    "range": "Cascades / St. Helens",
+    "state": "WA",
+    "elevation_ft": 3417,
+    "lat": 46.2754,
+    "lon": -122.1413,
+    "notes": "Post-1980 eruption recovery; ongoing USGS monitoring",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

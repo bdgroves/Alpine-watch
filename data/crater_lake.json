@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "crater_lake",
+    "name": "Crater Lake",
+    "range": "Cascades",
+    "state": "OR",
+    "elevation_ft": 6178,
+    "lat": 42.9446,
+    "lon": -122.109,
+    "notes": "Deepest U.S. lake; world clarity record holder; NPS long-term monitoring",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

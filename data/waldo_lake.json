@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "waldo_lake",
+    "name": "Waldo Lake",
+    "range": "Cascades",
+    "state": "OR",
+    "elevation_ft": 5414,
+    "lat": 43.7318,
+    "lon": -122.0454,
+    "notes": "Among purest lakes in North America; ultraoligotrophic baseline",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}

@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "id": "odell_lake",
+    "name": "Odell Lake",
+    "range": "Cascades",
+    "state": "OR",
+    "elevation_ft": 4787,
+    "lat": 43.5568,
+    "lon": -122.0054,
+    "notes": "High-elevation Cascade lake; oligotrophic benchmark",
+    "status": "no_data",
+    "alert_level": 0,
+    "chlorophyll_latest": null,
+    "chlorophyll_trend": null,
+    "secchi_latest": null,
+    "secchi_trend": null,
+    "temp_latest": null,
+    "phosphorus_latest": null,
+    "last_sample_date": null,
+    "sample_count": 0
+  },
+  "chlorophyll_timeseries": []
+}
