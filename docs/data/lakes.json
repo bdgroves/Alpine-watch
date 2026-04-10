@@ -1,16 +1,9 @@
 {
   "meta": {
-    "updated_utc": "2026-04-10T02:08:05.213909+00:00",
+    "updated_utc": "2026-04-10T02:16:07.986423+00:00",
     "lake_count": 13,
-    "ranges": [
-      "Sierra Nevada",
-      "Eastern Sierra",
-      "North Cascades",
-      "Olympics",
-      "Cascades",
-      "Cascades / St. Helens"
-    ],
-    "data_source": "USGS Water Quality Portal (WQP)",
+    "api_version": "WQX 3.0",
+    "data_source": "USGS Water Quality Portal (WQX 3.0)",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
   },
   "lakes": [
