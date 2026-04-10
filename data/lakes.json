@@ -1,9 +1,8 @@
 {
   "meta": {
-    "updated_utc": "2026-04-10T02:28:42.645557+00:00",
+    "updated_utc": "2026-04-10T02:39:07.677543+00:00",
     "lake_count": 13,
-    "api_version": "WQX 3.0",
-    "data_source": "USGS Water Quality Portal (WQX 3.0)",
+    "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
   },
   "lakes": [
