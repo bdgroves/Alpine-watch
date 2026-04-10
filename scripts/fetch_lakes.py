@@ -7,7 +7,7 @@ Sierra Nevada and Cascades.
 
 Data source: USGS Water Quality Portal WQX 3.0
   Endpoint: waterqualitydata.us/wqx3/Result/search
-  NOTE: Legacy /data/Result/search returns 406 as of 2024.
+  Format:   CSV only (JSON not supported on wqx3 endpoint)
 
 Brooks Groves · bdgroves/alpine-watch
 """
@@ -160,6 +160,8 @@ LAKES = [
 
 # ─────────────────────────────────────────────────────────────
 # WQX 3.0 API CONFIG
+# JSON not supported on wqx3 — must use mimeType=csv
+# Do NOT send Accept: application/json header
 # ─────────────────────────────────────────────────────────────
 WQP_BASE = "https://www.waterqualitydata.us/wqx3/Result/search"
 
@@ -177,12 +179,14 @@ LOOKBACK_DAYS = 365 * 5
 
 WQP_HEADERS = {
     "User-Agent": "alpine-watch/1.0 (https://github.com/bdgroves/Alpine-watch; bdgroves@github)",
-    "Accept": "application/json",
 }
 
 
-def fetch_wqp_data(lake: dict) -> list[dict]:
-    """Query WQX 3.0 endpoint by bounding box. Returns list of records."""
+def fetch_wqp_data(lake: dict) -> pd.DataFrame:
+    """
+    Query WQX 3.0 endpoint by bounding box. Returns DataFrame of results.
+    Uses mimeType=csv — the only format supported by the wqx3 endpoint.
+    """
     start_date = (datetime.now() - timedelta(days=LOOKBACK_DAYS)).strftime("%m-%d-%Y")
     lat, lon = lake["lat"], lake["lon"]
     bbox = f"{lon-0.05},{lat-0.05},{lon+0.05},{lat+0.05}"
@@ -191,52 +195,65 @@ def fetch_wqp_data(lake: dict) -> list[dict]:
         "bBox": bbox,
         "characteristicName": "|".join(WQP_CHARACTERISTICS),
         "startDateLo": start_date,
-        "mimeType": "json",
+        "mimeType": "csv",           # CSV only on wqx3
         "zip": "no",
         "dataProfile": "narrowResult",
+        "providers": ["NWIS", "STORET"],
     }
 
     try:
-        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=60)
+        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=90)
         resp.raise_for_status()
 
-        ct = resp.headers.get("Content-Type", "")
-        if "json" in ct:
-            records = resp.json()
-        else:
-            # WQX 3.0 may return CSV; parse it
-            df = pd.read_csv(StringIO(resp.text), low_memory=False)
-            records = df.to_dict(orient="records")
-
-        print(f"  WQP {lake['name']}: {len(records)} records")
-        return records
+        df = pd.read_csv(StringIO(resp.text), low_memory=False)
+        print(f"  WQP {lake['name']}: {len(df)} records")
+        return df
 
     except Exception as e:
         print(f"  WQP {lake['name']} ERROR: {e}")
+        return pd.DataFrame()
+
+
+def parse_wqp_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
+    """
+    Normalize WQP CSV DataFrame into tidy observation list.
+    Handles column name variants across WQX versions.
+    """
+    if df.empty:
         return []
 
+    # Normalize column names — strip whitespace, lowercase for matching
+    col_map = {c.strip(): c for c in df.columns}
+    def get_col(candidates):
+        for c in candidates:
+            if c in col_map:
+                return col_map[c]
+        return None
 
-def parse_wqp_records(records: list[dict], lake_id: str) -> list[dict]:
-    """Normalize WQP records. Handles WQX 2.2 and 3.0 field name variants."""
+    val_col  = get_col(["ResultMeasureValue", "result_measure_value"])
+    unit_col = get_col(["ResultMeasure/MeasureUnitCode", "result_measure_unit_code", "MeasureUnitCode"])
+    char_col = get_col(["CharacteristicName", "characteristic_name"])
+    date_col = get_col(["ActivityStartDate", "activity_start_date"])
+    org_col  = get_col(["OrganizationIdentifier", "organization_identifier"])
+
+    if not val_col or not char_col or not date_col:
+        print(f"  WARNING: Unexpected columns for {lake_id}: {list(df.columns[:10])}")
+        return []
+
     parsed = []
-    for r in records:
+    for _, row in df.iterrows():
         try:
-            val_str = r.get("ResultMeasureValue") or r.get("result_measure_value") or ""
-            unit    = r.get("ResultMeasure/MeasureUnitCode") or r.get("result_measure_unit_code") or ""
-            char    = r.get("CharacteristicName") or r.get("characteristic_name") or ""
-            date_str = r.get("ActivityStartDate") or r.get("activity_start_date") or ""
-
-            if not val_str or str(val_str).strip() in ("", "nan", "None"):
+            val_str = str(row.get(val_col, "")).strip()
+            if val_str in ("", "nan", "None", "ND"):
                 continue
-
             val = float(val_str)
             parsed.append({
-                "lake_id": lake_id,
-                "date": date_str,
-                "characteristic": char,
-                "value": val,
-                "unit": unit,
-                "org": r.get("OrganizationIdentifier", ""),
+                "lake_id":       lake_id,
+                "date":          str(row.get(date_col, "")),
+                "characteristic": str(row.get(char_col, "")),
+                "value":         val,
+                "unit":          str(row.get(unit_col, "")) if unit_col else "",
+                "org":           str(row.get(org_col, "")) if org_col else "",
             })
         except (ValueError, TypeError):
             continue
@@ -244,7 +261,7 @@ def parse_wqp_records(records: list[dict], lake_id: str) -> list[dict]:
 
 
 def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
-    """Compute dashboard summary with alert level."""
+    """Compute dashboard summary with EPA NLA alert levels."""
     if not observations:
         return {
             "id": lake["id"], "name": lake["name"], "range": lake["range"],
@@ -282,9 +299,9 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
 
     alert = 0
     if chl_val is not None:
-        if chl_val > 10:    alert = max(alert, 3)
-        elif chl_val > 5:   alert = max(alert, 2)
-        elif chl_val > 2.5: alert = max(alert, 1)
+        if chl_val > 10:     alert = max(alert, 3)
+        elif chl_val > 5:    alert = max(alert, 2)
+        elif chl_val > 2.5:  alert = max(alert, 1)
     if chl_trend == "rising":
         alert = max(alert, 1)
     if sec_val is not None and sec_val < 3:
@@ -323,7 +340,7 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ALPINE-WATCH  //  fetch_lakes.py")
     print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
-    print(f"  Endpoint: WQX 3.0  ({WQP_BASE})")
+    print(f"  Endpoint: WQX 3.0 CSV  ({WQP_BASE})")
     print(f"{'='*60}\n")
 
     os.makedirs("docs/data", exist_ok=True)
@@ -332,8 +349,8 @@ def main():
 
     for lake in LAKES:
         print(f"── {lake['name']} ({lake['state']}) ──")
-        raw      = fetch_wqp_data(lake)
-        obs      = parse_wqp_records(raw, lake["id"])
+        df       = fetch_wqp_data(lake)
+        obs      = parse_wqp_df(df, lake["id"])
         summary  = compute_lake_summary(obs, lake)
         ts       = build_chlorophyll_timeseries(obs)
         all_summaries.append(summary)
