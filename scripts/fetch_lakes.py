@@ -5,11 +5,10 @@ alpine-watch / fetch_lakes.py
 Pulls water quality data for sentinel alpine lakes across the
 Sierra Nevada and Cascades.
 
-Data source: USGS Water Quality Portal WQX 3.0
-  Endpoint: waterqualitydata.us/wqx3/Result/search
-  Format:   CSV only
-  Strategy: One characteristic per request (pipe-delimited lists
-            cause 500 errors on the wqx3 endpoint)
+Data source: USGS Water Quality Portal via dataretrieval-python
+  Uses the official USGS Python package which handles endpoint
+  routing, retries, and content negotiation automatically.
+  Legacy endpoint (/data/) covers all pre-2024 EPA/state data.
 
 Brooks Groves · bdgroves/alpine-watch
 """
@@ -17,10 +16,9 @@ Brooks Groves · bdgroves/alpine-watch
 import json
 import os
 import time
-from datetime import datetime, timedelta, timezone
-from io import StringIO
+from datetime import datetime, timezone
 
-import requests
+import dataretrieval.wqp as wqp
 import pandas as pd
 import numpy as np
 
@@ -160,108 +158,73 @@ LAKES = [
     },
 ]
 
-# ─────────────────────────────────────────────────────────────
-# WQX 3.0 API CONFIG
-# One characteristic per request — pipe-delimited lists cause 500s
-# ─────────────────────────────────────────────────────────────
-WQP_BASE = "https://www.waterqualitydata.us/wqx3/Result/search"
-
-# Queried individually, not as a combined list
-WQP_CHARACTERISTICS = [
+CHARACTERISTICS = [
     "Chlorophyll a",
     "Depth, Secchi disk depth",
     "Temperature, water",
     "Phosphorus",
 ]
 
-LOOKBACK_DAYS = 365 * 5
-
-WQP_HEADERS = {
-    "User-Agent": "alpine-watch/1.0 (https://github.com/bdgroves/Alpine-watch; bdgroves@github)",
-}
+START_DATE = "2019-01-01"
 
 
-def fetch_one_characteristic(lake: dict, characteristic: str) -> pd.DataFrame:
+def fetch_lake(lake: dict) -> pd.DataFrame:
     """
-    Query WQX 3.0 for a single lake + single characteristic.
-    Returns DataFrame or empty DataFrame on error.
+    Fetch water quality data for one lake using dataretrieval-python.
+    Queries one characteristic at a time to avoid server overload.
+    Returns combined DataFrame or empty DataFrame.
     """
-    start_date = (datetime.now() - timedelta(days=LOOKBACK_DAYS)).strftime("%m-%d-%Y")
     lat, lon = lake["lat"], lake["lon"]
-    bbox = f"{lon-0.05},{lat-0.05},{lon+0.05},{lat+0.05}"
-
-    params = {
-        "bBox": bbox,
-        "characteristicName": characteristic,
-        "startDateLo": start_date,
-        "mimeType": "csv",
-        "zip": "no",
-        "dataProfile": "narrowResult",
-    }
-
-    try:
-        resp = requests.get(WQP_BASE, params=params, headers=WQP_HEADERS, timeout=60)
-        resp.raise_for_status()
-        df = pd.read_csv(StringIO(resp.text), low_memory=False)
-        return df
-    except Exception as e:
-        print(f"    [{characteristic}] ERROR: {e}")
-        return pd.DataFrame()
-
-
-def fetch_wqp_data(lake: dict) -> pd.DataFrame:
-    """
-    Fetch all characteristics for one lake, one request each.
-    Concatenates results into a single DataFrame.
-    """
+    bbox = (lon - 0.05, lat - 0.05, lon + 0.05, lat + 0.05)
     frames = []
-    total = 0
-    for char in WQP_CHARACTERISTICS:
-        df = fetch_one_characteristic(lake, char)
-        if not df.empty:
-            frames.append(df)
-            total += len(df)
-        time.sleep(0.5)  # polite gap between characteristic requests
+
+    for char in CHARACTERISTICS:
+        try:
+            df, _ = wqp.get_results(
+                bBox=bbox,
+                characteristicName=char,
+                startDateLo=START_DATE,
+            )
+            if df is not None and not df.empty:
+                frames.append(df)
+                print(f"    [{char}]: {len(df)} records")
+            else:
+                print(f"    [{char}]: 0 records")
+            time.sleep(1.5)  # respect rate limits
+        except Exception as e:
+            print(f"    [{char}] ERROR: {e}")
+            time.sleep(2.0)
 
     if not frames:
-        print(f"  {lake['name']}: 0 records")
+        print(f"  {lake['name']}: 0 records total")
         return pd.DataFrame()
 
     combined = pd.concat(frames, ignore_index=True)
-    print(f"  {lake['name']}: {total} records across {len(frames)} characteristics")
+    print(f"  {lake['name']}: {len(combined)} records total")
     return combined
 
 
-def parse_wqp_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
-    """
-    Normalize WQP CSV DataFrame into tidy observation list.
-    Flexible column detection for WQX version differences.
-    """
+def parse_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
+    """Normalize WQP DataFrame into tidy observation list."""
     if df.empty:
         return []
 
-    cols = list(df.columns)
+    cols = set(df.columns)
 
     def get_col(candidates):
         for c in candidates:
             if c in cols:
                 return c
-        # case-insensitive fallback
-        cols_lower = {x.lower(): x for x in cols}
-        for c in candidates:
-            if c.lower() in cols_lower:
-                return cols_lower[c.lower()]
         return None
 
-    val_col  = get_col(["ResultMeasureValue", "result_measure_value"])
-    unit_col = get_col(["ResultMeasure/MeasureUnitCode", "MeasureUnitCode", "result_measure_unit_code"])
-    char_col = get_col(["CharacteristicName", "characteristic_name"])
-    date_col = get_col(["ActivityStartDate", "activity_start_date"])
-    org_col  = get_col(["OrganizationIdentifier", "organization_identifier"])
+    val_col  = get_col(["ResultMeasureValue"])
+    char_col = get_col(["CharacteristicName"])
+    date_col = get_col(["ActivityStartDate"])
+    unit_col = get_col(["ResultMeasure/MeasureUnitCode", "MeasureUnitCode"])
+    org_col  = get_col(["OrganizationIdentifier"])
 
     if not val_col or not char_col or not date_col:
-        print(f"  WARNING: Missing expected columns for {lake_id}")
-        print(f"  Available: {cols[:15]}")
+        print(f"  WARNING: missing columns for {lake_id}, got: {list(df.columns[:8])}")
         return []
 
     parsed = []
@@ -284,7 +247,7 @@ def parse_wqp_df(df: pd.DataFrame, lake_id: str) -> list[dict]:
     return parsed
 
 
-def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
+def compute_summary(observations: list[dict], lake: dict) -> dict:
     """Compute dashboard summary with EPA NLA alert levels."""
     if not observations:
         return {
@@ -292,7 +255,8 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
             "state": lake["state"], "elevation_ft": lake["elevation_ft"],
             "lat": lake["lat"], "lon": lake["lon"], "notes": lake["notes"],
             "status": "no_data", "alert_level": 0, "alert_label": "WATCH",
-            "chlorophyll_latest": None, "chlorophyll_unit": "µg/L", "chlorophyll_trend": None,
+            "chlorophyll_latest": None, "chlorophyll_unit": "µg/L",
+            "chlorophyll_trend": None,
             "secchi_latest": None, "secchi_unit": "m", "secchi_trend": None,
             "temp_latest": None, "temp_unit": "°C",
             "phosphorus_latest": None, "phosphorus_unit": "mg/L",
@@ -337,7 +301,8 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
         "state": lake["state"], "elevation_ft": lake["elevation_ft"],
         "lat": lake["lat"], "lon": lake["lon"], "notes": lake["notes"],
         "status": "ok", "alert_level": alert, "alert_label": labels[alert],
-        "chlorophyll_latest": chl_val, "chlorophyll_unit": "µg/L", "chlorophyll_trend": chl_trend,
+        "chlorophyll_latest": chl_val, "chlorophyll_unit": "µg/L",
+        "chlorophyll_trend": chl_trend,
         "secchi_latest": sec_val, "secchi_unit": "m", "secchi_trend": sec_trend,
         "temp_latest": temp_val, "temp_unit": "°C",
         "phosphorus_latest": phos_val, "phosphorus_unit": "mg/L",
@@ -345,7 +310,7 @@ def compute_lake_summary(observations: list[dict], lake: dict) -> dict:
     }
 
 
-def build_chlorophyll_timeseries(observations: list[dict]) -> list[dict]:
+def build_timeseries(observations: list[dict]) -> list[dict]:
     """Monthly-averaged chlorophyll-a for sparklines."""
     if not observations:
         return []
@@ -364,7 +329,7 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ALPINE-WATCH  //  fetch_lakes.py")
     print(f"  {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
-    print(f"  Endpoint: WQX 3.0 CSV (one characteristic per request)")
+    print(f"  Source: dataretrieval-python / USGS WQP")
     print(f"{'='*60}\n")
 
     os.makedirs("docs/data", exist_ok=True)
@@ -373,19 +338,18 @@ def main():
 
     for lake in LAKES:
         print(f"── {lake['name']} ({lake['state']}) ──")
-        df       = fetch_wqp_data(lake)
-        obs      = parse_wqp_df(df, lake["id"])
-        summary  = compute_lake_summary(obs, lake)
-        ts       = build_chlorophyll_timeseries(obs)
+        df       = fetch_lake(lake)
+        obs      = parse_df(df, lake["id"])
+        summary  = compute_summary(obs, lake)
+        ts       = build_timeseries(obs)
         all_summaries.append(summary)
         lake_detail[lake["id"]] = {"summary": summary, "chlorophyll_timeseries": ts}
-        time.sleep(1.0)  # gap between lakes
+        time.sleep(2.0)
 
     meta = {
         "updated_utc": datetime.now(timezone.utc).isoformat(),
         "lake_count": len(LAKES),
-        "api_version": "WQX 3.0",
-        "data_source": "USGS Water Quality Portal (WQX 3.0)",
+        "data_source": "USGS Water Quality Portal via dataretrieval-python",
         "note": "Chlorophyll-a threshold: >10 µg/L = eutrophic per EPA NLA",
     }
     with open("docs/data/lakes.json", "w") as f:
@@ -397,14 +361,13 @@ def main():
             json.dump(detail, f, indent=2)
     print(f"✓ Wrote {len(lake_detail)} per-lake detail files")
 
-    manifest = {
-        "last_run": datetime.now(timezone.utc).isoformat(),
-        "status": "success",
-        "lakes_fetched": len(LAKES),
-        "source": "USGS WQP WQX 3.0",
-    }
     with open("docs/data/manifest.json", "w") as f:
-        json.dump(manifest, f, indent=2)
+        json.dump({
+            "last_run": datetime.now(timezone.utc).isoformat(),
+            "status": "success",
+            "lakes_fetched": len(LAKES),
+            "source": "dataretrieval-python / USGS WQP",
+        }, f, indent=2)
     print(f"✓ Wrote docs/data/manifest.json\n")
     print("DONE.\n")
 
