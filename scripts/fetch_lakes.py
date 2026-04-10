@@ -160,7 +160,7 @@ CHARACTERISTICS = [
     "Phosphorus",
 ]
 
-START_DATE = "2019-01-01"
+START_DATE = "01-01-2019"
 
 
 def fetch_lake(lake: dict) -> pd.DataFrame:
