@@ -1,0 +1,58 @@
+name: alpine-watch · fetch & deploy
+
+on:
+  schedule:
+    # Every Tuesday and Friday at 06:00 UTC (weekly during monitoring season)
+    - cron: "0 6 * * 2,5"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Manual run reason"
+        required: false
+        default: "manual trigger"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  fetch-and-deploy:
+    runs-on: ubuntu-latest
+    name: Fetch lake data + render charts + deploy
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.8.1
+        with:
+          pixi-version: v0.26.0
+          cache: true
+
+      - name: Fetch lake data (WQP)
+        run: pixi run fetch
+
+      - name: Render charts
+        run: pixi run render
+
+      - name: Commit updated data + charts
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "alpine-watch[bot]"
+          git add docs/data/ docs/charts/
+          git diff --staged --quiet || git commit -m \
+            "📡 auto: lake data update $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          force_orphan: false
+          user_name: "alpine-watch[bot]"
+          user_email: "action@github.com"
+          commit_message: "🏔️ deploy: alpine-watch dashboard update"
