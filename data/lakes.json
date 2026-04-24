@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_utc": "2026-04-21T08:01:48.451117+00:00",
+    "updated_utc": "2026-04-24T08:35:27.426015+00:00",
     "lake_count": 13,
     "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
@@ -51,10 +51,10 @@
       "secchi_trend": null,
       "temp_latest": 24.0,
       "temp_unit": "\u00b0C",
-      "phosphorus_latest": 0.041,
+      "phosphorus_latest": null,
       "phosphorus_unit": "mg/L",
       "last_sample_date": "2025-06-20",
-      "sample_count": 45
+      "sample_count": 6
     },
     {
       "id": "donner_lake",
@@ -265,7 +265,7 @@
       "lat": 42.9446,
       "lon": -122.109,
       "notes": "Deepest U.S. lake; world clarity record holder; NPS long-term monitoring",
-      "status": "ok",
+      "status": "no_data",
       "alert_level": 0,
       "alert_label": "WATCH",
       "chlorophyll_latest": null,
@@ -274,12 +274,12 @@
       "secchi_latest": null,
       "secchi_unit": "m",
       "secchi_trend": null,
-      "temp_latest": 8.53,
+      "temp_latest": null,
       "temp_unit": "\u00b0C",
       "phosphorus_latest": null,
       "phosphorus_unit": "mg/L",
-      "last_sample_date": "2024-09-25",
-      "sample_count": 6
+      "last_sample_date": null,
+      "sample_count": 0
     },
     {
       "id": "odell_lake",
