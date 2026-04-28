@@ -19,10 +19,10 @@
     "secchi_trend": null,
     "temp_latest": 24.0,
     "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
+    "phosphorus_latest": 0.041,
     "phosphorus_unit": "mg/L",
     "last_sample_date": "2025-06-20",
-    "sample_count": 6
+    "sample_count": 45
   },
   "chlorophyll_timeseries": []
 }
