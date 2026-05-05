@@ -22,7 +22,7 @@
     "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
     "last_sample_date": "2025-10-21",
-    "sample_count": 7827
+    "sample_count": 9029
   },
   "chlorophyll_timeseries": [
     {
@@ -187,19 +187,19 @@
     },
     {
       "month": "2025-06",
-      "chl": 1.0
+      "chl": 0.869
     },
     {
       "month": "2025-07",
-      "chl": 2.462
+      "chl": 2.511
     },
     {
       "month": "2025-08",
-      "chl": 11.267
+      "chl": 9.675
     },
     {
       "month": "2025-09",
-      "chl": 1.75
+      "chl": 1.854
     },
     {
       "month": "2025-10",
