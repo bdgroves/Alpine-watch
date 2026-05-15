@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_utc": "2026-05-12T08:48:10.079166+00:00",
+    "updated_utc": "2026-05-15T08:56:14.226237+00:00",
     "lake_count": 13,
     "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
