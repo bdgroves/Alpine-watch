@@ -17,7 +17,7 @@
     "secchi_latest": 5.7,
     "secchi_unit": "m",
     "secchi_trend": "rising",
-    "temp_latest": 11.758,
+    "temp_latest": 11.475,
     "temp_unit": "\u00b0C",
     "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
@@ -27,7 +27,7 @@
   "chlorophyll_timeseries": [
     {
       "month": "2019-06",
-      "chl": 3.338
+      "chl": 3.337
     },
     {
       "month": "2019-07",
