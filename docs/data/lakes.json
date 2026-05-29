@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_utc": "2026-05-26T10:05:28.672519+00:00",
+    "updated_utc": "2026-05-29T10:02:26.996449+00:00",
     "lake_count": 13,
     "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
@@ -124,7 +124,7 @@
       "secchi_latest": null,
       "secchi_unit": "m",
       "secchi_trend": null,
-      "temp_latest": 4.3,
+      "temp_latest": 15.1,
       "temp_unit": "\u00b0C",
       "phosphorus_latest": 0.04,
       "phosphorus_unit": "mg/L",
@@ -174,7 +174,7 @@
       "secchi_latest": 28.0,
       "secchi_unit": "m",
       "secchi_trend": "insufficient_data",
-      "temp_latest": 19.6,
+      "temp_latest": 19.5,
       "temp_unit": "\u00b0C",
       "phosphorus_latest": null,
       "phosphorus_unit": "mg/L",
@@ -299,7 +299,7 @@
       "secchi_latest": 5.7,
       "secchi_unit": "m",
       "secchi_trend": "rising",
-      "temp_latest": 11.758,
+      "temp_latest": 11.475,
       "temp_unit": "\u00b0C",
       "phosphorus_latest": 3.62,
       "phosphorus_unit": "mg/L",
