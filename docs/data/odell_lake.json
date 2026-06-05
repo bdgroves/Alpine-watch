@@ -17,12 +17,12 @@
     "secchi_latest": 5.7,
     "secchi_unit": "m",
     "secchi_trend": "rising",
-    "temp_latest": 11.475,
+    "temp_latest": 11.8,
     "temp_unit": "\u00b0C",
     "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
     "last_sample_date": "2025-10-21",
-    "sample_count": 9029
+    "sample_count": 9743
   },
   "chlorophyll_timeseries": [
     {
