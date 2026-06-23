@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_utc": "2026-06-19T10:45:55.772764+00:00",
+    "updated_utc": "2026-06-23T09:51:28.594295+00:00",
     "lake_count": 13,
     "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
@@ -291,9 +291,9 @@
       "lon": -122.0054,
       "notes": "High-elevation Cascade lake; oligotrophic benchmark",
       "status": "ok",
-      "alert_level": 1,
-      "alert_label": "CAUTION",
-      "chlorophyll_latest": 4.8,
+      "alert_level": 2,
+      "alert_label": "ELEVATED",
+      "chlorophyll_latest": 5.2,
       "chlorophyll_unit": "\u00b5g/L",
       "chlorophyll_trend": "falling",
       "secchi_latest": 5.7,
@@ -304,7 +304,7 @@
       "phosphorus_latest": 3.62,
       "phosphorus_unit": "mg/L",
       "last_sample_date": "2025-10-21",
-      "sample_count": 9743
+      "sample_count": 9702
     },
     {
       "id": "waldo_lake",

@@ -9,9 +9,9 @@
     "lon": -122.0054,
     "notes": "High-elevation Cascade lake; oligotrophic benchmark",
     "status": "ok",
-    "alert_level": 1,
-    "alert_label": "CAUTION",
-    "chlorophyll_latest": 4.8,
+    "alert_level": 2,
+    "alert_label": "ELEVATED",
+    "chlorophyll_latest": 5.2,
     "chlorophyll_unit": "\u00b5g/L",
     "chlorophyll_trend": "falling",
     "secchi_latest": 5.7,
@@ -22,7 +22,7 @@
     "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
     "last_sample_date": "2025-10-21",
-    "sample_count": 9743
+    "sample_count": 9702
   },
   "chlorophyll_timeseries": [
     {
@@ -187,19 +187,19 @@
     },
     {
       "month": "2025-06",
-      "chl": 0.869
+      "chl": 1.0
     },
     {
       "month": "2025-07",
-      "chl": 2.511
+      "chl": 2.462
     },
     {
       "month": "2025-08",
-      "chl": 9.675
+      "chl": 11.267
     },
     {
       "month": "2025-09",
-      "chl": 1.854
+      "chl": 1.75
     },
     {
       "month": "2025-10",
