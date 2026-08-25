@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_utc": "2026-08-21T06:54:41.996192+00:00",
+    "updated_utc": "2026-08-25T06:55:58.672201+00:00",
     "lake_count": 13,
     "data_source": "USGS Water Quality Portal via dataretrieval-python",
     "note": "Chlorophyll-a threshold: >10 \u00b5g/L = eutrophic per EPA NLA"
@@ -299,12 +299,12 @@
       "secchi_latest": 6.2,
       "secchi_unit": "m",
       "secchi_trend": "rising",
-      "temp_latest": 12.5,
+      "temp_latest": 10.2,
       "temp_unit": "\u00b0C",
       "phosphorus_latest": 3.62,
       "phosphorus_unit": "mg/L",
       "last_sample_date": "2026-05-19",
-      "sample_count": 9717
+      "sample_count": 9789
     },
     {
       "id": "waldo_lake",
