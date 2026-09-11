@@ -11,18 +11,18 @@
     "status": "ok",
     "alert_level": 0,
     "alert_label": "WATCH",
-    "chlorophyll_latest": 1.1,
+    "chlorophyll_latest": 1.0,
     "chlorophyll_unit": "\u00b5g/L",
     "chlorophyll_trend": "falling",
     "secchi_latest": 6.2,
     "secchi_unit": "m",
     "secchi_trend": "rising",
-    "temp_latest": 10.2,
+    "temp_latest": 14.1,
     "temp_unit": "\u00b0C",
     "phosphorus_latest": 3.62,
     "phosphorus_unit": "mg/L",
-    "last_sample_date": "2026-05-19",
-    "sample_count": 9789
+    "last_sample_date": "2026-06-10",
+    "sample_count": 9793
   },
   "chlorophyll_timeseries": [
     {
@@ -212,6 +212,10 @@
     {
       "month": "2026-05",
       "chl": 2.525
+    },
+    {
+      "month": "2026-06",
+      "chl": 0.85
     }
   ]
 }
