@@ -72,12 +72,35 @@ def ice_out(s2: pd.DataFrame):
     return out, freezes
 
 
+# A scene counts for colour only if the water looks like water: almost no cloud or
+# ice over the lake, dark in the near-infrared (haze, smoke, glint, ice and slush
+# all brighten it, even after the SWIR offset is taken off), and not under a smoke
+# plume by Sen2Cor's aerosol estimate.
+NIR_MAX = 0.02
+AOT_MAX = 0.30
+
+
+def clean(s2: pd.DataFrame) -> pd.DataFrame:
+    if s2.empty or "B02" not in s2:
+        return s2.iloc[0:0]
+    d = s2.copy()
+    rec = d.apply(lambda r: pd.Series(fu.reading({k: r.get(k) for k in ("B01", "B02", "B03", "B04", "B05", "B11")},
+                                                 str(r.get("sat", "2A")))), axis=1)
+    for c in ("hue", "fu", "swatch", "ndci"):
+        d[c] = rec[c]
+    ok = (d.f_water.fillna(0) >= 0.7) & (d.f_ice.fillna(0) < 0.02) & (d.f_cloud.fillna(0) < 0.1) \
+        & ((d.B08 - d.get("B11", 0)).fillna(1) < NIR_MAX) & d.hue.notna()
+    if "aot" in d:
+        ok &= d.aot.fillna(0) < AOT_MAX
+    return d[ok]
+
+
 def yearly(s2: pd.DataFrame, ls: pd.DataFrame):
     years = {}
-    if not s2.empty and "hue" in s2:
-        d = s2.dropna(subset=["hue"]).copy()
+    if not s2.empty:
+        d = clean(s2)
         d["date"] = pd.to_datetime(d["date"])
-        d = d[d.date.dt.month.isin(SUMMER) & (d.f_ice.fillna(0) < 0.05) & (d.f_cloud.fillna(0) < 0.2)]
+        d = d[d.date.dt.month.isin(SUMMER)]
         for yr, g in d.groupby(d.date.dt.year):
             if len(g) < MIN_SCENES:
                 continue
@@ -155,9 +178,8 @@ def judge(years: dict, ice: dict, now_year: int):
 
 def latest(s2: pd.DataFrame, ls: pd.DataFrame):
     out = {}
-    if not s2.empty and "hue" in s2:
-        d = s2.dropna(subset=["hue"])
-        d = d[(d.f_ice.fillna(0) < 0.05) & (d.f_cloud.fillna(0) < 0.2)]
+    if not s2.empty:
+        d = clean(s2)
         if not d.empty:
             r = d.sort_values("date").iloc[-1]
             out["colour"] = {"date": r.date, "hue": float(r.hue), "fu": int(r.fu) if pd.notna(r.fu) else None,
@@ -174,14 +196,13 @@ def latest(s2: pd.DataFrame, ls: pd.DataFrame):
 def recent_series(s2: pd.DataFrame, ls: pd.DataFrame, years_back=3):
     cut = (dt.date.today() - dt.timedelta(days=365 * years_back)).isoformat()
     ser = {"colour": [], "temp": [], "ice": []}
-    if not s2.empty and "hue" in s2:
-        d = s2[s2.date >= cut]
-        for r in d.itertuples():
-            if pd.notna(getattr(r, "hue", np.nan)) and (r.f_ice or 0) < 0.05 and (r.f_cloud or 0) < 0.2:
-                ser["colour"].append([r.date, round(float(r.hue), 1),
-                                      int(r.fu) if pd.notna(r.fu) else None,
-                                      round(float(r.ndci), 4) if pd.notna(r.ndci) else None,
-                                      r.swatch if isinstance(r.swatch, str) else None])
+    if not s2.empty:
+        for r in clean(s2[s2.date >= cut]).itertuples():
+            ser["colour"].append([r.date, round(float(r.hue), 1),
+                                  int(r.fu) if pd.notna(r.fu) else None,
+                                  round(float(r.ndci), 4) if pd.notna(r.ndci) else None,
+                                  r.swatch if isinstance(r.swatch, str) else None])
+        for r in s2[s2.date >= cut].itertuples():
             if pd.notna(getattr(r, "f_ice", np.nan)) and (r.f_cloud or 0) < 0.3:
                 ser["ice"].append([r.date, round(float(r.f_ice), 2)])
     if not ls.empty and "lswt_c" in ls:
@@ -206,7 +227,7 @@ def main():
         for y, v in ice.items():
             years.setdefault(y, {})["ice_out_doy"] = v["doy"]
         verdict = judge(years, ice, now_year) if years else None
-        n_clear = int(s2["hue"].notna().sum()) if "hue" in s2 else 0
+        n_clear = int(len(clean(s2))) if not s2.empty else 0
         n_temp = int(ls["lswt_c"].notna().sum()) if "lswt_c" in ls else 0
         summary = {k: lake.get(k) for k in ("id", "name", "range", "state", "elevation_ft", "lat", "lon",
                                             "kind", "notes")}

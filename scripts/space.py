@@ -129,7 +129,7 @@ def read(href, bounds, shape_hw, resampling=Resampling.nearest):
 
 
 # ── Sentinel-2 ────────────────────────────────────────────────────────────────
-S2_BANDS = ("B01", "B02", "B03", "B04", "B05", "B08")
+S2_BANDS = ("B01", "B02", "B03", "B04", "B05", "B08", "B11")
 
 
 def s2_one(item, geom):
@@ -170,14 +170,10 @@ def s2_one(item, geom):
     med = {b: float(np.median(refl[b][good])) for b in S2_BANDS}
     for b in S2_BANDS:
         row[b] = round(med[b], 5)
-    sat = "S2" + row["sat"][-1:] if row["sat"] else "S2A"
-    if min(med[b] for b in ("B01", "B02", "B03", "B04")) > 0:
-        a = fu.hue_angle(med["B01"], med["B02"], med["B03"], med["B04"], med["B05"], sat)
-        row["hue"] = round(a, 2) if a is not None else None
-        row["fu"] = fu.forel_ule(a)
-        row["swatch"] = fu.swatch(med["B01"], med["B02"], med["B03"], med["B04"], med["B05"])
-    s = med["B05"] + med["B04"]
-    row["ndci"] = round((med["B05"] - med["B04"]) / s, 4) if s > 0 else None
+    if "AOT" in item.assets:          # Sen2Cor's aerosol optical thickness: smoke and haze
+        aot = read(item.assets["AOT"].href, bounds, hw, Resampling.average).astype("float32") / 1000.0
+        row["aot"] = round(float(np.median(aot[mask])), 3)
+    row.update(fu.reading(med, row["sat"]))
     # a little true-colour chip, kept only for the newest scene
     rgb = np.dstack([refl["B04"], refl["B03"], refl["B02"]])
     return row, rgb

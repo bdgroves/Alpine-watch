@@ -89,6 +89,37 @@ def swatch(r443, r490, r560, r665, r705) -> str | None:
     return "#" + "".join(f"{round(g(v) * 255):02x}" for v in rgb)
 
 
+def reading(med: dict, sat: str = "2A") -> dict:
+    """Hue angle, FU, swatch and NDCI from median band reflectances (B01..B05).
+
+    After the SWIR offset is removed, very clear water can still sit a hair below
+    zero in the red and red-edge bands; those are clipped to a tiny positive value
+    rather than throwing the scene away. Blue and green must be positive."""
+    out = {"hue": None, "fu": None, "swatch": None, "ndci": None}
+    b1, b2, b3, b4, b5 = (med.get(k) for k in ("B01", "B02", "B03", "B04", "B05"))
+    vals = (b1, b2, b3, b4, b5)
+    if any(v is None or v != v for v in vals):
+        return out
+    # Water sends back essentially nothing at 1610 nm (B11), so whatever the
+    # satellite still records there is offset: sun glint, thin haze, or the
+    # atmospheric correction over- or under-shooting a small dark lake in deep
+    # terrain. Take it off every band before reading the colour.
+    off = med.get("B11")
+    if off is not None and off == off:
+        b1, b2, b3, b4, b5 = (v - off for v in (b1, b2, b3, b4, b5))
+    if b2 <= 0 or b3 <= 0:
+        return out
+    eps = 1e-4
+    b1, b4, b5 = max(b1, eps), max(b4, eps), max(b5, eps)
+    s = "S2" + str(sat)[-1:].upper()
+    a = hue_angle(b1, b2, b3, b4, b5, s)
+    out["hue"] = round(a, 2) if a is not None else None
+    out["fu"] = forel_ule(a)
+    out["swatch"] = swatch(b1, b2, b3, b4, b5)
+    out["ndci"] = round((b5 - b4) / (b5 + b4), 4)
+    return out
+
+
 if __name__ == "__main__":
     # sanity: clear blue, green and brown water
     for name, r in {"clear blue": (0.020, 0.018, 0.010, 0.002, 0.001),
