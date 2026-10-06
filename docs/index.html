@@ -83,7 +83,7 @@ footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);font-
 .chip{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid var(--border-bright);background:#0a1220}
 .chipcap{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:4px}
 .sig{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.sig div{border:1px solid var(--border);padding:10px 12px;background:var(--bg-card)}
+.sig>div{border:1px solid var(--border);padding:10px 12px;background:var(--bg-card)}
 .sig .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim)}
 .sig .n{font-family:var(--font-mono);font-size:19px;font-weight:700;margin:2px 0}
 .sig .c{font-size:13.5px;color:var(--text-mid)}
@@ -144,7 +144,7 @@ footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);font-
     <div><h3>Sentinel-2, since 2017</h3><p>Every few days the European Sentinel-2 satellites photograph each lake at 10 to 20 metres. For each clear pass, ALPINE-WATCH reads only the open water, keeping 40 metres in from the shore so beaches and shallows don't leak in. Big lakes are sampled inside a 3 km circle so it's the same water every time.</p><p>Colour comes from the visible bands, converted to a hue angle and a Forel-Ule number with the published Sentinel-2 coefficients (Van der Woerd &amp; Wernand), the same ones used in ESA's SNAP toolbox.</p></div>
     <div><h3>A chlorophyll index, not a lab number</h3><p>NDCI compares the red-edge band with the red band, which rises as algae thicken. It's good at spotting a lake getting greener, but in very clear lakes it can't be turned into micrograms per litre honestly, so it's shown as an index and judged only against the lake's own past.</p></div>
     <div><h3>Ice-out and temperature</h3><p>Sentinel-2 classifies ice and snow, so the spring day each lake opens up can be pinned to within a few days. Landsat 8 and 9 measure surface temperature from their thermal band, every 8 to 16 days since 2013. Summer temperature here is the July and August median.</p></div>
-    <div><h3>What it can't see</h3><p>Lakes smaller than a few hectares, the colour of water under cloud or smoke, anything below the surface, and toxins. Diablo Lake's turquoise is glacial flour, so its colour tracks the glaciers more than algae. Mono Lake is salty, and its colour follows brine shrimp and algae on its own rules.</p><p>A flag here means "worth a closer look," not a diagnosis.</p></div>
+    <div><h3>What it can't see</h3><p>Small, dark lakes in deep granite basins, like Kibbie and Many Island: the standard atmospheric correction can push their blue and green to zero, and Landsat's 100 m thermal pixels can't fit inside them without catching hot rock, so for those it's mostly ice-out. Also lakes smaller than a few hectares, the colour of water under cloud or smoke, anything below the surface, and toxins. Diablo Lake's turquoise is glacial flour, so its colour tracks the glaciers more than algae. Mono Lake is salty, and its colour follows brine shrimp and algae on its own rules.</p><p>A flag here means "worth a closer look," not a diagnosis.</p></div>
   </div>
 </section>
 
@@ -246,7 +246,7 @@ async function render() {
       <div class="meta">${esc(l.range)} · ${esc(l.state)} · ${l.elevation_ft.toLocaleString()} ft${l.area_km2 ? ` · ${l.area_km2 < 1 ? (l.area_km2 * 247.1).toFixed(0) + " acres" : l.area_km2.toFixed(1) + " km²"}` : ""}</div></div>
       <span class="badge" style="color:${LV[lv]}">${esc(label(l))}</span></div>
       <div class="swrow"><div class="sw" style="background:${c?.swatch || "#0a1220"}"></div>
-        <div class="swtxt">${c ? `<b>FU ${c.fu ?? "—"}</b> on ${fmtDate(c.date)}<br>` : "No clear look yet<br>"}${t ? `Surface ${t.c.toFixed(1)} °C on ${fmtDate(t.date)}` : ""}</div></div>
+        <div class="swtxt">${c && (l.scenes?.s2_clear || 0) >= 20 ? `<b>FU ${c.fu ?? "—"}</b> on ${fmtDate(c.date)}<br>` : "Too small and dark for a steady colour reading<br>"}${t ? `Surface ${t.c.toFixed(1)} °C on ${fmtDate(t.date)}` : ""}</div></div>
       <div class="verdict">${esc(l.verdict?.why || "")}</div>
       ${spark(l)}
     </article>`;
@@ -308,7 +308,7 @@ async function open(id) {
         <div class="sig">
           ${sigBox("Colour", s.colour, {now: n => "FU " + fuOf(n), base: b => "usually FU " + fuOf(b)})}
           ${sigBox("Chlorophyll index", s.ndci, {now: n => n.toFixed(3), base: b => "usually " + b.toFixed(3)})}
-          ${sigBox("Jul–Aug surface", s.temp, {now: n => n.toFixed(1) + " °C", base: b => "usually " + b.toFixed(1) + " °C"})}
+          ${l.thermal_ok ? sigBox("Jul–Aug surface", s.temp, {now: n => n.toFixed(1) + " °C", base: b => "usually " + b.toFixed(1) + " °C"}) : `<div><div class="k">Jul–Aug surface</div><div class="n" style="color:#5b7090">—</div><div class="c">Too narrow for Landsat's 100 m thermal pixels</div></div>`}
           ${l.freezes ? sigBox("Ice-out", s.ice_out, {now: n => doyDate(n), base: b => "usually " + doyDate(b)}) : `<div><div class="k">Ice-out</div><div class="n" style="color:#5b7090">—</div><div class="c">Doesn't freeze over</div></div>`}
         </div>
       </div>
@@ -316,7 +316,7 @@ async function open(id) {
     <div class="charts">
       <div class="chart"><h4>Summer colour</h4><p>Median Forel-Ule hue each July–September. Higher on the chart = bluer.</p>${chart({years: ys, key: "hue", fmt: h => "FU " + fuOf(h), baseline: s.colour, color: "#00c9be", dotColor: y => FU_RGB[(y.fu || 1) - 1]})}</div>
       <div class="chart"><h4>Chlorophyll index</h4><p>Median NDCI each summer. Higher = more chlorophyll signal.</p>${chart({years: ys, key: "ndci", fmt: n => n.toFixed(2), baseline: s.ndci, color: "#10b981"})}</div>
-      <div class="chart"><h4>Surface temperature</h4><p>Landsat, median of July and August looks.</p>${chart({years: ys, key: "lswt", fmt: n => n.toFixed(0) + "°", unit: " °C", baseline: s.temp, color: "#f97316"})}</div>
+      ${l.thermal_ok ? `<div class="chart"><h4>Surface temperature</h4><p>Landsat, median of July and August looks.</p>${chart({years: ys, key: "lswt", fmt: n => n.toFixed(0) + "°", unit: " °C", baseline: s.temp, color: "#f97316"})}</div>` : ""}
       ${l.freezes ? `<div class="chart"><h4>Ice-out</h4><p>The spring day the lake opened, from Sentinel-2. Higher = earlier.</p>${chart({years: ys, key: "ice_out_doy", fmt: n => doyDate(Math.round(n)), invert: true, baseline: s.ice_out, color: "#a8d8e8"})}</div>` : ""}
     </div>
     ${ground}
@@ -332,6 +332,7 @@ function fuOf(h) { const T = [232.0,227.168,220.977,209.994,190.779,163.084,132.
 function close() { $("#overlay").classList.remove("open"); history.replaceState(null, "", location.pathname); }
 $("#overlay").addEventListener("click", e => { if (e.target.id === "overlay") close(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id && LAKES.find(l => l.id === id)) open(id); });
 boot();
 </script>
 </body>

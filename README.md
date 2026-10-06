@@ -1,7 +1,7 @@
 # ALPINE-WATCH
 ### *Sierra Nevada & Cascades · Lake Clarity Monitor*
 
-**`bdgroves/Alpine-watch`** — automated water quality surveillance for 13 high-elevation sentinel lakes across California, Washington, and Oregon. Built to watch the slow greening of water that was never supposed to turn green.
+**`bdgroves/Alpine-watch`** — seventeen mountain lakes in California, Washington and Oregon, watched from space and, where anyone samples them, from the ground. Built to watch the slow greening of water that was never supposed to turn green.
 
 ---
 
@@ -20,6 +20,47 @@ ALPINE-WATCH is my attempt to watch it happen from a desk in Lakewood, Washingto
 The science is being done by people like Isabella Oleksy at CU Boulder, who's spent years documenting decades-long chlorophyll-a increases in Rocky Mountain National Park lakes, and who found cyanobacteria — specifically *Dolichospermum*, carrier of the neurotoxin delightfully nicknamed "Very Fast Death Factor" — blooming in Turkey Creek Lake, Colorado, at 11,135 feet elevation. That story hit *Scientific American* this spring. It's been rattling around in my head ever since.
 
 This is the Pacific Coast version of that watch.
+
+---
+
+## What changed in October 2026: from the ground to space
+
+The first version pulled samples from the Water Quality Portal. It turned out that **12 of the 13 lakes returned no samples at all**: USGS stopped updating the portal's legacy service in 2024, and much of the work on these lakes (UC Davis at Tahoe, the park service at Crater Lake) was never in it. Most mountain lakes will never see a sampling boat anyway. So the satellites do the looking now, and the portal is kept as ground truth where it exists.
+
+| What | From | How |
+|---|---|---|
+| **Water colour** | Sentinel-2 L2A, 2017– | Median surface reflectance of open water (40 m in from shore; big lakes inside a 3 km circle), converted to a hue angle and a **Forel-Ule** number with the Van der Woerd & Wernand Sentinel-2 coefficients (the same constants as ESA SNAP's FU operator and ACOLITE) |
+| **Chlorophyll index** | Sentinel-2 | NDCI, red-edge vs red. Shown as an index, never as µg/L, and left blank for lakes too clear to read it |
+| **Ice-out** | Sentinel-2 scene classification | The spring day the lake opened, for lakes seen ice-covered in March/April in 3+ years |
+| **Surface temperature** | Landsat 8/9 Collection 2, 2013– | Median July–August skin temperature, only for lakes with a core of water 150 m+ from shore (Landsat's thermal pixels are 100 m; narrow granite lakes read hot) |
+| **Ground truth** | Water Quality Portal | Surface samples (top 3 m) since 2019 inside each lake's outline, units put on one footing |
+
+**Each lake is judged against itself.** This summer's values against the median and spread of the summers before it (at least three). A lake is flagged WATCH when one signal is 1.5 spreads off its normal, ELEVATED at 2.5 or with two signals off, ALERT only when colour and chlorophyll index both jump and the index is clearly positive. Early ice-out is shown but never raises a flag on its own.
+
+**Quality screens** (all in `scripts/summarize.py`): at least 70% of the sampled water classed as water, under 2% ice and 10% cloud, near-infrared under 0.02 (haze, smoke, glint and slush all brighten it), Sen2Cor aerosol optical thickness under 0.3 (smoke), and blue and green clearly above zero.
+
+**Honest limits.** Small dark lakes in deep granite basins (Kibbie, Many Island) often come out of the standard atmospheric correction with blue and green at zero, so they get few colour readings; their temperatures are left out for the reason above. For them it's mostly ice-out for now. Diablo's turquoise is glacial flour and Mono is saline, so their colours follow their own rules.
+
+### Pipeline
+
+```
+lakes.yaml                       the catalog (17 lakes; backcountry ones flagged)
+scripts/outlines.py              lake polygons from OpenStreetMap (one batched Overpass query)
+scripts/space.py <id>            Sentinel-2 + Landsat per scene, read a window at a time
+                                 from Microsoft Planetary Computer -> data/space/<id>_s2.csv, _ls.csv
+scripts/fu.py                    hue angle, Forel-Ule, swatch, NDCI
+scripts/summarize.py             summers, ice-out, baselines, verdicts -> docs/data/space.json + space/<id>.json
+scripts/fetch_lakes.py           ground samples (WQP) -> docs/data/lakes.json
+docs/index.html                  map + cards + per-lake detail
+```
+
+Workflows: **from space** (Mondays; one job per lake, incremental) and **ground truth & deploy** (Tue/Fri).
+
+```bash
+pixi run outlines
+pixi run space kibbie_lake --since 2017-03-01
+pixi run summarize
+```
 
 ---
 

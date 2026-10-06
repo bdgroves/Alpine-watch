@@ -24,6 +24,24 @@ import pandas as pd
 import yaml
 
 import fu
+from shapely.geometry import shape
+from shapely.ops import transform as shp_transform
+from pyproj import Transformer
+
+THERMAL_CORE_HA = 5.0   # open water 150 m+ from shore needed for Landsat's 100 m thermal pixels
+
+
+def thermal_ok(lake, reg):
+    """Landsat's thermal band sees 100 m pixels: in a narrow lake every pixel mixes
+    in sun-baked granite from the shore, and reads hot. Only trust it where there's
+    a core of water at least 150 m from any shore."""
+    g = reg.get("sample_geom")
+    if not g:
+        return False
+    zone = int((lake["lon"] + 180) // 6) + 1
+    t = Transformer.from_crs("EPSG:4326", f"EPSG:{32600 + zone}", always_xy=True).transform
+    core = shp_transform(t, shape(g)).buffer(-(150 - reg.get("s2_buffer_m", 40)))
+    return (core.area / 1e4) >= THERMAL_CORE_HA
 
 ROOT = Path(__file__).resolve().parents[1]
 SPACE = ROOT / "data" / "space"
@@ -52,7 +70,12 @@ def ice_out(s2: pd.DataFrame):
     d = s2.dropna(subset=["f_ice", "f_water"]).copy()
     d = d[(d.f_cloud.fillna(0) < 0.3) & (d.f_nodata.fillna(0) < 0.2)]
     d["date"] = pd.to_datetime(d["date"])
-    freezes = bool(((d.date.dt.month <= 4) & (d.f_ice >= 0.5)).any())
+    # Sen2Cor sometimes calls cloud "snow", so a lake only counts as one that
+    # freezes if a clear March or April look shows it ice-covered in 3+ years.
+    w = d[(d.date.dt.month <= 4) & (d.f_cloud < 0.05) & (d.f_ice >= 0.8)]
+    freezes = w.date.dt.year.nunique() >= 3
+    if not freezes:
+        return out, False
     for yr, g in d[d.date.dt.month.between(3, 8)].groupby(d.date.dt.year):
         g = g.sort_values("date")
         icy = g[g.f_ice >= 0.5]
@@ -74,8 +97,7 @@ def ice_out(s2: pd.DataFrame):
 
 # A scene counts for colour only if the water looks like water: almost no cloud or
 # ice over the lake, dark in the near-infrared (haze, smoke, glint, ice and slush
-# all brighten it, even after the SWIR offset is taken off), and not under a smoke
-# plume by Sen2Cor's aerosol estimate.
+# all brighten it), and not under a smoke plume by Sen2Cor's aerosol estimate.
 NIR_MAX = 0.02
 AOT_MAX = 0.30
 
@@ -84,12 +106,12 @@ def clean(s2: pd.DataFrame) -> pd.DataFrame:
     if s2.empty or "B02" not in s2:
         return s2.iloc[0:0]
     d = s2.copy()
-    rec = d.apply(lambda r: pd.Series(fu.reading({k: r.get(k) for k in ("B01", "B02", "B03", "B04", "B05", "B11")},
+    rec = d.apply(lambda r: pd.Series(fu.reading({k: r.get(k) for k in ("B01", "B02", "B03", "B04", "B05")},
                                                  str(r.get("sat", "2A")))), axis=1)
     for c in ("hue", "fu", "swatch", "ndci"):
         d[c] = rec[c]
     ok = (d.f_water.fillna(0) >= 0.7) & (d.f_ice.fillna(0) < 0.02) & (d.f_cloud.fillna(0) < 0.1) \
-        & ((d.B08 - d.get("B11", 0)).fillna(1) < NIR_MAX) & d.hue.notna()
+        & (d.B08.fillna(1) < NIR_MAX) & d.hue.notna()
     if "aot" in d:
         ok &= d.aot.fillna(0) < AOT_MAX
     return d[ok]
@@ -124,7 +146,7 @@ def yearly(s2: pd.DataFrame, ls: pd.DataFrame):
 def judge(years: dict, ice: dict, now_year: int):
     """This summer against the lake's own baseline."""
     ys = sorted(years)
-    cur_year = max((y for y in ys if "hue" in years[y] or "lswt" in years[y]), default=None)
+    cur_year = max((y for y in ys if {"hue", "lswt", "ice_out_doy"} & set(years[y])), default=None)
     if cur_year is None:
         return None
     base = [y for y in ys if y < cur_year]
@@ -223,12 +245,13 @@ def main():
         ls = pd.read_csv(lsp) if lsp.exists() else pd.DataFrame()
         reg = json.loads(regp.read_text()) if regp.exists() else {}
         ice, freezes = ice_out(s2)
-        years = yearly(s2, ls)
+        t_ok = thermal_ok(lake, reg)
+        years = yearly(s2, ls if t_ok else pd.DataFrame())
         for y, v in ice.items():
             years.setdefault(y, {})["ice_out_doy"] = v["doy"]
         verdict = judge(years, ice, now_year) if years else None
         n_clear = int(len(clean(s2))) if not s2.empty else 0
-        n_temp = int(ls["lswt_c"].notna().sum()) if "lswt_c" in ls else 0
+        n_temp = int(ls["lswt_c"].notna().sum()) if ("lswt_c" in ls and t_ok) else 0
         summary = {k: lake.get(k) for k in ("id", "name", "range", "state", "elevation_ft", "lat", "lon",
                                             "kind", "notes")}
         summary.update({
@@ -238,14 +261,15 @@ def main():
             "scenes": {"s2": int(len(s2)), "s2_clear": n_clear, "landsat": int(len(ls)), "landsat_temp": n_temp},
             "first_year": int(min(years)) if years else None,
             "freezes": freezes,
-            "latest": latest(s2, ls),
+            "thermal_ok": t_ok,
+            "latest": latest(s2, ls if t_ok else pd.DataFrame()),
             "verdict": verdict,
         })
         rows.append(summary)
         detail = {"summary": summary,
                   "years": [{"year": y, **years[y]} for y in sorted(years)],
                   "ice_out": {str(k): v for k, v in sorted(ice.items())},
-                  "recent": recent_series(s2, ls),
+                  "recent": recent_series(s2, ls if t_ok else pd.DataFrame()),
                   "region": reg.get("sample_geom")}
         (OUT / "space" / f"{lake['id']}.json").write_text(json.dumps(detail, separators=(",", ":")))
         lv = verdict["label"] if verdict else "NO DATA"

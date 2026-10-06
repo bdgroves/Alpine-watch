@@ -1,6 +1,6 @@
 {
  "meta": {
-  "updated_utc": "2026-10-06T16:05:31+00:00",
+  "updated_utc": "2026-10-06T16:11:57+00:00",
   "lakes": 17,
   "sources": [
    "Copernicus Sentinel-2 L2A",
@@ -25,19 +25,20 @@
    "sampled": "3 km circle",
    "scenes": {
     "s2": 888,
-    "s2_clear": 626,
+    "s2_clear": 469,
     "landsat": 196,
     "landsat_temp": 159
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-10-02",
-     "hue": 225.4,
+     "hue": 225.42,
      "fu": 2,
-     "swatch": "#3ca7f4",
-     "ndci": -0.6667
+     "swatch": "#38a7f5",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-28",
@@ -50,17 +51,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 221.7,
-      "baseline": 215.0,
-      "spread": 6.672,
-      "z": -1.0,
+      "now": 222.2,
+      "baseline": 216.2,
+      "spread": 4.596,
+      "z": -1.31,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.0368,
+      "baseline": 0.009,
+      "spread": 0.073,
+      "z": -0.63,
       "years": 9
      },
      "temp": {
@@ -90,19 +91,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 887,
-    "s2_clear": 469,
+    "s2_clear": 334,
     "landsat": 196,
     "landsat_temp": 156
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-30",
-     "hue": 223.36,
-     "fu": 2,
-     "swatch": "#00abff",
-     "ndci": 0.0
+     "hue": 201.66,
+     "fu": 4,
+     "swatch": "#66aab7",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-28",
@@ -115,17 +117,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 170.4,
-      "baseline": 173.8,
-      "spread": 26.242,
-      "z": 0.13,
+      "now": 201.7,
+      "baseline": 182.9,
+      "spread": 21.201,
+      "z": -0.89,
       "years": 9
      },
      "ndci": {
-      "now": -0.0078,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": -0.78,
+      "now": -0.0486,
+      "baseline": -0.036,
+      "spread": 0.123,
+      "z": -0.1,
       "years": 9
      },
      "temp": {
@@ -155,19 +157,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 889,
-    "s2_clear": 275,
+    "s2_clear": 266,
     "landsat": 196,
     "landsat_temp": 151
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-10-02",
-     "hue": 162.85,
+     "hue": 160.22,
      "fu": 6,
-     "swatch": "#71ac92",
-     "ndci": 0.0
+     "swatch": "#8ba693",
+     "ndci": -0.2364
     },
     "temp": {
      "date": "2026-09-28",
@@ -180,17 +183,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 177.8,
-      "baseline": 172.6,
-      "spread": 35.879,
-      "z": -0.14,
+      "now": 138.4,
+      "baseline": 153.9,
+      "spread": 23.722,
+      "z": 0.65,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.043,
+      "baseline": -0.003,
+      "spread": 0.046,
+      "z": -0.88,
       "years": 9
      },
      "temp": {
@@ -220,19 +223,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 471,
-    "s2_clear": 196,
+    "s2_clear": 182,
     "landsat": 197,
     "landsat_temp": 142
    },
    "first_year": 2017,
    "freezes": true,
+   "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-08-30",
-     "hue": 224.8,
-     "fu": 2,
-     "swatch": "#009dff",
-     "ndci": 0.0
+     "date": "2026-09-19",
+     "hue": 213.03,
+     "fu": 3,
+     "swatch": "#37acd2",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-21",
@@ -245,17 +249,17 @@
     "label": "WATCH",
     "signals": {
      "colour": {
-      "now": 222.5,
-      "baseline": 186.0,
-      "spread": 38.103,
-      "z": -0.96,
+      "now": 209.0,
+      "baseline": 184.3,
+      "spread": 21.201,
+      "z": -1.17,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.0663,
+      "baseline": -0.032,
+      "spread": 0.087,
+      "z": -0.39,
       "years": 9
      },
      "temp": {
@@ -285,19 +289,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 457,
-    "s2_clear": 103,
+    "s2_clear": 150,
     "landsat": 584,
     "landsat_temp": 400
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-07-24",
-     "hue": 177.83,
-     "fu": 5,
-     "swatch": "#4ab0a1",
-     "ndci": 0.0
+     "date": "2026-09-22",
+     "hue": 152.31,
+     "fu": 6,
+     "swatch": "#3ab47e",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-13",
@@ -309,8 +314,20 @@
     "level": 1,
     "label": "WATCH",
     "signals": {
-     "colour": null,
-     "ndci": null,
+     "colour": {
+      "now": 141.9,
+      "baseline": 125.2,
+      "spread": 36.472,
+      "z": -0.46,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.019,
+      "baseline": -0.053,
+      "spread": 0.133,
+      "z": 0.26,
+      "years": 9
+     },
      "temp": {
       "now": 23.4,
       "baseline": 21.8,
@@ -338,19 +355,20 @@
    "sampled": "3 km circle",
    "scenes": {
     "s2": 453,
-    "s2_clear": 375,
+    "s2_clear": 313,
     "landsat": 199,
     "landsat_temp": 169
    },
    "first_year": 2017,
    "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-10-02",
-     "hue": 76.83,
+     "date": "2026-09-22",
+     "hue": 78.5,
      "fu": 10,
-     "swatch": "#a0a46b",
-     "ndci": 0.0946
+     "swatch": "#9da562",
+     "ndci": 0.1066
     },
     "temp": {
      "date": "2026-09-13",
@@ -363,17 +381,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 106.0,
-      "baseline": 100.0,
-      "spread": 37.362,
-      "z": -0.16,
+      "now": 103.7,
+      "baseline": 99.3,
+      "spread": 36.472,
+      "z": -0.12,
       "years": 9
      },
      "ndci": {
-      "now": -0.1142,
-      "baseline": -0.053,
-      "spread": 0.146,
-      "z": -0.42,
+      "now": -0.073,
+      "baseline": -0.041,
+      "spread": 0.113,
+      "z": -0.29,
       "years": 9
      },
      "temp": {
@@ -403,23 +421,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 462,
-    "s2_clear": 10,
+    "s2_clear": 32,
     "landsat": 592,
-    "landsat_temp": 395
+    "landsat_temp": 0
    },
    "first_year": 2017,
    "freezes": true,
+   "thermal_ok": false,
    "latest": {
     "colour": {
-     "date": "2025-09-02",
-     "hue": 213.96,
-     "fu": 3,
-     "swatch": "#80a5bb",
-     "ndci": -0.2135
-    },
-    "temp": {
-     "date": "2026-09-28",
-     "c": 17.44
+     "date": "2026-06-14",
+     "hue": 175.53,
+     "fu": 5,
+     "swatch": "#95a39b",
+     "ndci": -0.1089
     }
    },
    "verdict": {
@@ -429,13 +444,7 @@
     "signals": {
      "colour": null,
      "ndci": null,
-     "temp": {
-      "now": 25.8,
-      "baseline": 25.0,
-      "spread": 0.75,
-      "z": 1.07,
-      "years": 9
-     },
+     "temp": null,
      "ice_out": {
       "now": 107,
       "baseline": 128,
@@ -462,40 +471,37 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 462,
-    "s2_clear": 8,
+    "s2_clear": 11,
     "landsat": 592,
-    "landsat_temp": 162
+    "landsat_temp": 0
    },
-   "first_year": 2018,
+   "first_year": 2017,
    "freezes": true,
+   "thermal_ok": false,
    "latest": {
     "colour": {
-     "date": "2023-10-03",
-     "hue": 205.75,
-     "fu": 4,
-     "swatch": "#8da3ad",
-     "ndci": 0.0312
-    },
-    "temp": {
-     "date": "2026-09-12",
-     "c": 21.09
+     "date": "2025-09-17",
+     "hue": 178.09,
+     "fu": 5,
+     "swatch": "#63ada0",
+     "ndci": null
     }
    },
    "verdict": {
-    "year": 2026,
+    "year": 2025,
     "level": 0,
     "label": "STEADY",
     "signals": {
      "colour": null,
      "ndci": null,
-     "temp": {
-      "now": 26.9,
-      "baseline": 27.6,
-      "spread": 1.779,
-      "z": -0.39,
-      "years": 7
-     },
-     "ice_out": null
+     "temp": null,
+     "ice_out": {
+      "now": 131,
+      "baseline": 146,
+      "spread": 41.5,
+      "z": 0.36,
+      "years": 3
+     }
     },
     "why": "Within its usual range."
    }
@@ -515,51 +521,42 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 491,
-    "s2_clear": 135,
+    "s2_clear": 131,
     "landsat": 198,
-    "landsat_temp": 84
+    "landsat_temp": 0
    },
    "first_year": 2017,
    "freezes": true,
+   "thermal_ok": false,
    "latest": {
     "colour": {
      "date": "2026-09-19",
-     "hue": 195.4,
-     "fu": 4,
-     "swatch": "#82a6aa",
-     "ndci": 0.0
-    },
-    "temp": {
-     "date": "2026-09-13",
-     "c": 12.95
+     "hue": 186.62,
+     "fu": 5,
+     "swatch": "#82a7a4",
+     "ndci": null
     }
    },
    "verdict": {
     "year": 2026,
-    "level": 1,
-    "label": "WATCH",
+    "level": 0,
+    "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 176.1,
-      "baseline": 136.0,
-      "spread": 29.355,
-      "z": -1.37,
+      "now": 169.3,
+      "baseline": 143.9,
+      "spread": 36.175,
+      "z": -0.7,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.0645,
+      "baseline": -0.039,
+      "spread": 0.089,
+      "z": -0.28,
       "years": 9
      },
-     "temp": {
-      "now": 19.9,
-      "baseline": 18.7,
-      "spread": 0.75,
-      "z": 1.6,
-      "years": 7
-     },
+     "temp": null,
      "ice_out": {
       "now": 155,
       "baseline": 155,
@@ -568,7 +565,7 @@
       "years": 7
      }
     },
-    "why": "Warmer than usual."
+    "why": "Within its usual range."
    }
   },
   {
@@ -586,51 +583,42 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 470,
-    "s2_clear": 79,
+    "s2_clear": 123,
     "landsat": 198,
-    "landsat_temp": 82
+    "landsat_temp": 0
    },
-   "first_year": 2018,
+   "first_year": 2017,
    "freezes": true,
+   "thermal_ok": false,
    "latest": {
     "colour": {
      "date": "2026-09-22",
-     "hue": 212.0,
-     "fu": 3,
-     "swatch": "#47abcd",
-     "ndci": 0.0
-    },
-    "temp": {
-     "date": "2026-09-13",
-     "c": 14.12
+     "hue": 203.39,
+     "fu": 4,
+     "swatch": "#77a7b4",
+     "ndci": -0.3043
     }
    },
    "verdict": {
     "year": 2026,
-    "level": 1,
-    "label": "WATCH",
+    "level": 0,
+    "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 212.0,
-      "baseline": 209.7,
-      "spread": 6.968,
-      "z": -0.33,
-      "years": 5
+      "now": 195.6,
+      "baseline": 185.2,
+      "spread": 22.832,
+      "z": -0.46,
+      "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
-      "years": 5
+      "now": -0.0714,
+      "baseline": 0.029,
+      "spread": 0.108,
+      "z": -0.93,
+      "years": 8
      },
-     "temp": {
-      "now": 20.6,
-      "baseline": 19.2,
-      "spread": 0.75,
-      "z": 1.87,
-      "years": 7
-     },
+     "temp": null,
      "ice_out": {
       "now": 155,
       "baseline": 157,
@@ -639,7 +627,7 @@
       "years": 7
      }
     },
-    "why": "Warmer than usual."
+    "why": "Within its usual range."
    }
   },
   {
@@ -657,19 +645,20 @@
    "sampled": "3 km circle",
    "scenes": {
     "s2": 664,
-    "s2_clear": 339,
+    "s2_clear": 325,
     "landsat": 171,
     "landsat_temp": 110
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-09-28",
-     "hue": 170.08,
-     "fu": 5,
-     "swatch": "#1fb497",
-     "ndci": 0.0
+     "date": "2026-09-30",
+     "hue": 207.32,
+     "fu": 4,
+     "swatch": "#5baac1",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-26",
@@ -682,17 +671,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 209.6,
-      "baseline": 207.3,
-      "spread": 3.113,
-      "z": -0.74,
+      "now": 206.4,
+      "baseline": 204.9,
+      "spread": 3.558,
+      "z": -0.42,
       "years": 9
      },
      "ndci": {
-      "now": -0.1124,
-      "baseline": -0.027,
-      "spread": 0.04,
-      "z": -2.16,
+      "now": -0.093,
+      "baseline": -0.077,
+      "spread": 0.05,
+      "z": -0.32,
       "years": 9
      },
      "temp": {
@@ -722,19 +711,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 645,
-    "s2_clear": 305,
+    "s2_clear": 252,
     "landsat": 160,
     "landsat_temp": 92
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-26",
-     "hue": 199.36,
+     "hue": 196.73,
      "fu": 4,
-     "swatch": "#72a9b1",
-     "ndci": -0.913
+     "swatch": "#83a6aa",
+     "ndci": -0.299
     },
     "temp": {
      "date": "2026-09-17",
@@ -743,21 +733,21 @@
    },
    "verdict": {
     "year": 2026,
-    "level": 2,
-    "label": "ELEVATED",
+    "level": 0,
+    "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 158.9,
-      "baseline": 141.3,
-      "spread": 3.558,
-      "z": -4.95,
+      "now": 156.4,
+      "baseline": 137.5,
+      "spread": 3.706,
+      "z": -5.1,
       "years": 9
      },
      "ndci": {
-      "now": -0.161,
-      "baseline": -0.27,
-      "spread": 0.043,
-      "z": 2.54,
+      "now": -0.1392,
+      "baseline": -0.187,
+      "spread": 0.036,
+      "z": 1.31,
       "years": 9
      },
      "temp": {
@@ -769,7 +759,7 @@
      },
      "ice_out": null
     },
-    "why": "More chlorophyll signal than usual."
+    "why": "Within its usual range."
    }
   },
   {
@@ -787,19 +777,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 300,
-    "s2_clear": 147,
+    "s2_clear": 124,
     "landsat": 127,
     "landsat_temp": 73
    },
    "first_year": 2017,
    "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-18",
-     "hue": 211.96,
-     "fu": 3,
-     "swatch": "#82a5b8",
-     "ndci": -0.1489
+     "hue": 209.75,
+     "fu": 4,
+     "swatch": "#8ea3b0",
+     "ndci": -0.0642
     },
     "temp": {
      "date": "2026-09-16",
@@ -812,18 +803,18 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 200.6,
-      "baseline": 181.2,
-      "spread": 6.079,
-      "z": -3.19,
-      "years": 9
+      "now": 185.7,
+      "baseline": 171.9,
+      "spread": 3.0,
+      "z": -4.6,
+      "years": 8
      },
      "ndci": {
-      "now": -0.1702,
-      "baseline": -0.09,
-      "spread": 0.071,
-      "z": -1.13,
-      "years": 9
+      "now": -0.0465,
+      "baseline": -0.027,
+      "spread": 0.016,
+      "z": -1.22,
+      "years": 8
      },
      "temp": {
       "now": 21.1,
@@ -852,19 +843,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 562,
-    "s2_clear": 164,
+    "s2_clear": 199,
     "landsat": 148,
     "landsat_temp": 93
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-28",
-     "hue": 179.87,
-     "fu": 5,
-     "swatch": "#00c4af",
-     "ndci": 0.0
+     "hue": 147.14,
+     "fu": 6,
+     "swatch": "#74ac84",
+     "ndci": 0.05
     },
     "temp": {
      "date": "2026-09-17",
@@ -877,17 +869,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 193.7,
-      "baseline": 187.5,
-      "spread": 15.271,
-      "z": -0.41,
+      "now": 188.2,
+      "baseline": 181.5,
+      "spread": 21.201,
+      "z": -0.32,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.0084,
+      "baseline": 0.029,
+      "spread": 0.043,
+      "z": -0.87,
       "years": 9
      },
      "temp": {
@@ -917,19 +909,20 @@
    "sampled": "3 km circle",
    "scenes": {
     "s2": 391,
-    "s2_clear": 295,
+    "s2_clear": 232,
     "landsat": 163,
     "landsat_temp": 139
    },
    "first_year": 2017,
    "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-28",
-     "hue": 224.19,
+     "hue": 223.89,
      "fu": 2,
-     "swatch": "#00a8ff",
-     "ndci": 0.0
+     "swatch": "#00aaff",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-26",
@@ -942,17 +935,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 227.4,
-      "baseline": 226.7,
+      "now": 226.3,
+      "baseline": 226.0,
       "spread": 3.0,
-      "z": -0.23,
+      "z": -0.1,
       "years": 9
      },
      "ndci": {
-      "now": 0.0798,
-      "baseline": 0.062,
-      "spread": 0.091,
-      "z": 0.2,
+      "now": 0.0057,
+      "baseline": 0.02,
+      "spread": 0.033,
+      "z": -0.45,
       "years": 9
      },
      "temp": {
@@ -982,19 +975,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 368,
-    "s2_clear": 224,
+    "s2_clear": 126,
     "landsat": 163,
     "landsat_temp": 126
    },
    "first_year": 2017,
    "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-28",
-     "hue": 128.36,
+     "hue": 129.19,
      "fu": 7,
-     "swatch": "#64b167",
-     "ndci": 0.0
+     "swatch": "#6aaf6c",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-26",
@@ -1007,16 +1001,16 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 128.4,
-      "baseline": 122.6,
-      "spread": 43.885,
-      "z": -0.13,
+      "now": 129.2,
+      "baseline": 124.0,
+      "spread": 22.239,
+      "z": -0.23,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.116,
-      "spread": 0.111,
+      "now": -0.0621,
+      "baseline": 0.006,
+      "spread": 0.065,
       "z": -1.04,
       "years": 9
      },
@@ -1047,19 +1041,20 @@
    "sampled": "whole lake",
    "scenes": {
     "s2": 367,
-    "s2_clear": 253,
+    "s2_clear": 187,
     "landsat": 376,
     "landsat_temp": 279
    },
    "first_year": 2017,
-   "freezes": true,
+   "freezes": false,
+   "thermal_ok": true,
    "latest": {
     "colour": {
      "date": "2026-09-28",
-     "hue": 221.91,
-     "fu": 2,
-     "swatch": "#00abf4",
-     "ndci": 0.0
+     "hue": 220.82,
+     "fu": 3,
+     "swatch": "#00abec",
+     "ndci": null
     },
     "temp": {
      "date": "2026-09-26",
@@ -1072,17 +1067,17 @@
     "label": "STEADY",
     "signals": {
      "colour": {
-      "now": 221.9,
-      "baseline": 224.0,
+      "now": 220.8,
+      "baseline": 223.6,
       "spread": 3.0,
-      "z": 0.7,
+      "z": 0.93,
       "years": 9
      },
      "ndci": {
-      "now": 0.0,
-      "baseline": 0.0,
-      "spread": 0.01,
-      "z": 0.0,
+      "now": -0.0103,
+      "baseline": 0.007,
+      "spread": 0.027,
+      "z": -0.65,
       "years": 9
      },
      "temp": {

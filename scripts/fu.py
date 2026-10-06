@@ -92,22 +92,20 @@ def swatch(r443, r490, r560, r665, r705) -> str | None:
 def reading(med: dict, sat: str = "2A") -> dict:
     """Hue angle, FU, swatch and NDCI from median band reflectances (B01..B05).
 
-    After the SWIR offset is removed, very clear water can still sit a hair below
-    zero in the red and red-edge bands; those are clipped to a tiny positive value
-    rather than throwing the scene away. Blue and green must be positive."""
+    Very clear water can sit a hair below zero in the red and red-edge bands after
+    atmospheric correction; those are clipped to a tiny positive value rather than
+    throwing the scene away. Blue and green must be clearly positive."""
     out = {"hue": None, "fu": None, "swatch": None, "ndci": None}
     b1, b2, b3, b4, b5 = (med.get(k) for k in ("B01", "B02", "B03", "B04", "B05"))
     vals = (b1, b2, b3, b4, b5)
     if any(v is None or v != v for v in vals):
         return out
-    # Water sends back essentially nothing at 1610 nm (B11), so whatever the
-    # satellite still records there is offset: sun glint, thin haze, or the
-    # atmospheric correction over- or under-shooting a small dark lake in deep
-    # terrain. Take it off every band before reading the colour.
-    off = med.get("B11")
-    if off is not None and off == off:
-        b1, b2, b3, b4, b5 = (v - off for v in (b1, b2, b3, b4, b5))
-    if b2 <= 0 or b3 <= 0:
+    # Over small, dark lakes in deep terrain the standard atmospheric correction
+    # (Sen2Cor) can drive the blue and green bands to zero or below. There's no
+    # colour left to read then, so the scene is skipped rather than guessed at.
+    # (Subtracting the SWIR band as an offset was tried and made summer-to-summer
+    # readings noisier on every lake with good data, so it isn't done.)
+    if b2 <= 0.001 or b3 <= 0.001:
         return out
     eps = 1e-4
     b1, b4, b5 = max(b1, eps), max(b4, eps), max(b5, eps)
@@ -116,7 +114,9 @@ def reading(med: dict, sat: str = "2A") -> dict:
     out["hue"] = round(a, 2) if a is not None else None
     out["fu"] = forel_ule(a)
     out["swatch"] = swatch(b1, b2, b3, b4, b5)
-    out["ndci"] = round((b5 - b4) / (b5 + b4), 4)
+    # NDCI needs some red and red-edge light to work with; in the clearest lakes
+    # both are essentially zero and the index is just noise, so it's left blank.
+    out["ndci"] = round((b5 - b4) / (b5 + b4), 4) if (b4 + b5) > 0.002 else None
     return out
 
 
