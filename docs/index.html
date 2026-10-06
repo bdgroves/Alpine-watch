@@ -26,7 +26,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(0,201,190,.008) 39px,rgba(0,201,190,.008) 40px)}
 a{color:var(--teal)} a:hover{color:var(--ice-blue)}
 .wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:0 24px 80px}
-header{padding:44px 0 30px;border-bottom:1px solid var(--border);margin-bottom:28px}
+header{padding:22px 0 30px;border-bottom:1px solid var(--border);margin-bottom:28px}
+.sitenav{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;margin-bottom:26px}
+.sitenav a{color:var(--text-mid);text-decoration:none}.sitenav a:hover{color:var(--teal)}
 .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.25em;color:var(--teal);text-transform:uppercase}
 h1{font-family:var(--font-mono);font-size:clamp(30px,4.4vw,46px);font-weight:700;letter-spacing:-.01em;margin:6px 0 4px}
 h1 span{color:var(--teal)}
@@ -100,6 +102,7 @@ footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);font-
 <body>
 <div class="wrap">
 <header>
+  <nav class="sitenav" aria-label="Site"><a href="https://brooksgroves.com/">← brooksgroves.com</a><a href="https://brooksgroves.com/blog/alpine-watch-revisited-post.html">The story</a><a href="https://brooksgroves.com/hydrology.html">More water projects</a><a href="https://github.com/bdgroves/Alpine-watch">Code</a></nav>
   <div class="eyebrow">Sierra Nevada · Cascades · Olympics</div>
   <h1>ALPINE<span>-</span>WATCH</h1>
   <p class="tagline">Seventeen mountain lakes, watched from space. Most of them will never see a sampling boat, so the satellites do the looking: what colour the water is, how green it's getting, when the ice goes out and how warm the surface runs.</p>
@@ -150,7 +153,7 @@ footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);font-
 
 <footer>
   Satellite data: Copernicus Sentinel-2 L2A (ESA) and USGS Landsat 8/9 Collection 2, via Microsoft Planetary Computer · Lake outlines © OpenStreetMap contributors · Ground sampling: Water Quality Portal (USGS, EPA, state agencies) · Map tiles © CARTO<br>
-  Built by <a href="https://brooksgroves.com">Brooks Groves</a> · <a href="https://github.com/bdgroves/Alpine-watch">code on GitHub</a> · Inspired by Isabella Oleksy's work on mountain lakes turning green
+  Built by <a href="https://brooksgroves.com">Brooks Groves</a> · <a href="https://brooksgroves.com/blog/alpine-watch-revisited-post.html">the story behind it</a> · <a href="https://github.com/bdgroves/Alpine-watch">code on GitHub</a> · Inspired by Isabella Oleksy's work on mountain lakes turning green
 </footer>
 </div>
 
