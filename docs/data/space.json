@@ -1,6 +1,6 @@
 {
  "meta": {
-  "updated_utc": "2026-10-06T15:40:42+00:00",
+  "updated_utc": "2026-10-06T16:05:31+00:00",
   "lakes": 17,
   "sources": [
    "Copernicus Sentinel-2 L2A",
@@ -21,18 +21,59 @@
    "kind": "clear",
    "notes": "The gold standard. UC Davis has measured its clarity since 1968.",
    "backcountry": false,
-   "area_km2": null,
-   "sampled": "whole lake",
+   "area_km2": 498.472,
+   "sampled": "3 km circle",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 888,
+    "s2_clear": 626,
+    "landsat": 196,
+    "landsat_temp": 159
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-10-02",
+     "hue": 225.4,
+     "fu": 2,
+     "swatch": "#3ca7f4",
+     "ndci": -0.6667
+    },
+    "temp": {
+     "date": "2026-09-28",
+     "c": 15.7
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 221.7,
+      "baseline": 215.0,
+      "spread": 6.672,
+      "z": -1.0,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 19.4,
+      "baseline": 21.0,
+      "spread": 0.75,
+      "z": -2.13,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "fallen_leaf",
@@ -45,18 +86,59 @@
    "kind": "clear",
    "notes": "Tahoe's neighbour, a canary for nutrients in the basin.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 5.659,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 887,
+    "s2_clear": 469,
+    "landsat": 196,
+    "landsat_temp": 156
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-30",
+     "hue": 223.36,
+     "fu": 2,
+     "swatch": "#00abff",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-28",
+     "c": 14.8
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 170.4,
+      "baseline": 173.8,
+      "spread": 26.242,
+      "z": 0.13,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.0078,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": -0.78,
+      "years": 9
+     },
+     "temp": {
+      "now": 20.8,
+      "baseline": 21.7,
+      "spread": 0.75,
+      "z": -1.2,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "donner_lake",
@@ -69,18 +151,59 @@
    "kind": "clear",
    "notes": "Interstate 80 runs along its shore; busy in summer.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 3.428,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 889,
+    "s2_clear": 275,
+    "landsat": 196,
+    "landsat_temp": 151
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-10-02",
+     "hue": 162.85,
+     "fu": 6,
+     "swatch": "#71ac92",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-28",
+     "c": 16.12
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 177.8,
+      "baseline": 172.6,
+      "spread": 35.879,
+      "z": -0.14,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 22.7,
+      "baseline": 22.8,
+      "spread": 0.75,
+      "z": -0.13,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "convict_lake",
@@ -93,18 +216,59 @@
    "kind": "clear",
    "notes": "Deep, cold and close to the road, under Laurel Mountain.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 0.712,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 471,
+    "s2_clear": 196,
+    "landsat": 197,
+    "landsat_temp": 142
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-08-30",
+     "hue": 224.8,
+     "fu": 2,
+     "swatch": "#009dff",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-21",
+     "c": 16.03
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 1,
+    "label": "WATCH",
+    "signals": {
+     "colour": {
+      "now": 222.5,
+      "baseline": 186.0,
+      "spread": 38.103,
+      "z": -0.96,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 22.4,
+      "baseline": 20.6,
+      "spread": 0.75,
+      "z": 2.4,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Warmer than usual."
+   }
   },
   {
    "id": "twin_lakes_bridgeport",
@@ -117,18 +281,47 @@
    "kind": "clear",
    "notes": "Below Sawtooth Ridge, at the edge of the Hoover Wilderness.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 1.691,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 457,
+    "s2_clear": 103,
+    "landsat": 584,
+    "landsat_temp": 400
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-07-24",
+     "hue": 177.83,
+     "fu": 5,
+     "swatch": "#4ab0a1",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-13",
+     "c": 17.76
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 1,
+    "label": "WATCH",
+    "signals": {
+     "colour": null,
+     "ndci": null,
+     "temp": {
+      "now": 23.4,
+      "baseline": 21.8,
+      "spread": 0.75,
+      "z": 2.13,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Warmer than usual."
+   }
   },
   {
    "id": "mono_lake",
@@ -141,18 +334,59 @@
    "kind": "saline",
    "notes": "Salty and alkaline with no outlet; its colour follows brine shrimp and algae, not the rules for freshwater.",
    "backcountry": false,
-   "area_km2": null,
-   "sampled": "whole lake",
+   "area_km2": 184.192,
+   "sampled": "3 km circle",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 453,
+    "s2_clear": 375,
+    "landsat": 199,
+    "landsat_temp": 169
    },
-   "first_year": null,
+   "first_year": 2017,
    "freezes": false,
-   "latest": {},
-   "verdict": null
+   "latest": {
+    "colour": {
+     "date": "2026-10-02",
+     "hue": 76.83,
+     "fu": 10,
+     "swatch": "#a0a46b",
+     "ndci": 0.0946
+    },
+    "temp": {
+     "date": "2026-09-13",
+     "c": 18.62
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 106.0,
+      "baseline": 100.0,
+      "spread": 37.362,
+      "z": -0.16,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.1142,
+      "baseline": -0.053,
+      "spread": 0.146,
+      "z": -0.42,
+      "years": 9
+     },
+     "temp": {
+      "now": 23.8,
+      "baseline": 23.1,
+      "spread": 0.75,
+      "z": 0.93,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "kibbie_lake",
@@ -168,20 +402,20 @@
    "area_km2": 0.489,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 102,
-    "s2_clear": 5,
-    "landsat": 143,
-    "landsat_temp": 99
+    "s2": 462,
+    "s2_clear": 10,
+    "landsat": 592,
+    "landsat_temp": 395
    },
-   "first_year": 2025,
+   "first_year": 2017,
    "freezes": true,
    "latest": {
     "colour": {
-     "date": "2026-06-14",
-     "hue": 175.53,
-     "fu": 5,
-     "swatch": "#95a39b",
-     "ndci": -0.1089
+     "date": "2025-09-02",
+     "hue": 213.96,
+     "fu": 3,
+     "swatch": "#80a5bb",
+     "ndci": -0.2135
     },
     "temp": {
      "date": "2026-09-28",
@@ -190,15 +424,27 @@
    },
    "verdict": {
     "year": 2026,
-    "level": null,
-    "label": "BASELINE",
+    "level": 0,
+    "label": "STEADY",
     "signals": {
      "colour": null,
      "ndci": null,
-     "temp": null,
-     "ice_out": null
+     "temp": {
+      "now": 25.8,
+      "baseline": 25.0,
+      "spread": 0.75,
+      "z": 1.07,
+      "years": 9
+     },
+     "ice_out": {
+      "now": 107,
+      "baseline": 128,
+      "spread": 37.1,
+      "z": 0.57,
+      "years": 9
+     }
     },
-    "why": "Not enough past summers yet to say what normal looks like."
+    "why": "Within its usual range."
    }
   },
   {
@@ -212,18 +458,47 @@
    "kind": "clear",
    "notes": "About 48 acres of water among granite islands, a long day's walk up Kibbie Ridge.",
    "backcountry": true,
-   "area_km2": null,
+   "area_km2": 0.22,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 462,
+    "s2_clear": 8,
+    "landsat": 592,
+    "landsat_temp": 162
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2018,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2023-10-03",
+     "hue": 205.75,
+     "fu": 4,
+     "swatch": "#8da3ad",
+     "ndci": 0.0312
+    },
+    "temp": {
+     "date": "2026-09-12",
+     "c": 21.09
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": null,
+     "ndci": null,
+     "temp": {
+      "now": 26.9,
+      "baseline": 27.6,
+      "spread": 1.779,
+      "z": -0.39,
+      "years": 7
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "thousand_island_lake",
@@ -236,18 +511,65 @@
    "kind": "clear",
    "notes": "Under Banner Peak on the John Muir Trail. Ice-out often comes in July.",
    "backcountry": true,
-   "area_km2": null,
+   "area_km2": 1.352,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 491,
+    "s2_clear": 135,
+    "landsat": 198,
+    "landsat_temp": 84
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-19",
+     "hue": 195.4,
+     "fu": 4,
+     "swatch": "#82a6aa",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-13",
+     "c": 12.95
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 1,
+    "label": "WATCH",
+    "signals": {
+     "colour": {
+      "now": 176.1,
+      "baseline": 136.0,
+      "spread": 29.355,
+      "z": -1.37,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 19.9,
+      "baseline": 18.7,
+      "spread": 0.75,
+      "z": 1.6,
+      "years": 7
+     },
+     "ice_out": {
+      "now": 155,
+      "baseline": 155,
+      "spread": 5,
+      "z": -0.0,
+      "years": 7
+     }
+    },
+    "why": "Warmer than usual."
+   }
   },
   {
    "id": "garnet_lake",
@@ -260,18 +582,65 @@
    "kind": "clear",
    "notes": "Thousand Island's neighbour on the JMT, under Mount Ritter.",
    "backcountry": true,
-   "area_km2": null,
+   "area_km2": 0.856,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 470,
+    "s2_clear": 79,
+    "landsat": 198,
+    "landsat_temp": 82
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2018,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-22",
+     "hue": 212.0,
+     "fu": 3,
+     "swatch": "#47abcd",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-13",
+     "c": 14.12
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 1,
+    "label": "WATCH",
+    "signals": {
+     "colour": {
+      "now": 212.0,
+      "baseline": 209.7,
+      "spread": 6.968,
+      "z": -0.33,
+      "years": 5
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 5
+     },
+     "temp": {
+      "now": 20.6,
+      "baseline": 19.2,
+      "spread": 0.75,
+      "z": 1.87,
+      "years": 7
+     },
+     "ice_out": {
+      "now": 155,
+      "baseline": 157,
+      "spread": 5,
+      "z": 0.4,
+      "years": 7
+     }
+    },
+    "why": "Warmer than usual."
+   }
   },
   {
    "id": "lake_chelan",
@@ -284,18 +653,59 @@
    "kind": "clear",
    "notes": "1,486 ft deep, one of the deepest lakes in North America.",
    "backcountry": false,
-   "area_km2": null,
-   "sampled": "whole lake",
+   "area_km2": 132.318,
+   "sampled": "3 km circle",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 664,
+    "s2_clear": 339,
+    "landsat": 171,
+    "landsat_temp": 110
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-28",
+     "hue": 170.08,
+     "fu": 5,
+     "swatch": "#1fb497",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-26",
+     "c": 17.62
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 209.6,
+      "baseline": 207.3,
+      "spread": 3.113,
+      "z": -0.74,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.1124,
+      "baseline": -0.027,
+      "spread": 0.04,
+      "z": -2.16,
+      "years": 9
+     },
+     "temp": {
+      "now": 22.8,
+      "baseline": 23.2,
+      "spread": 0.75,
+      "z": -0.53,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "diablo_lake",
@@ -311,20 +721,20 @@
    "area_km2": 2.836,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 136,
-    "s2_clear": 55,
-    "landsat": 47,
-    "landsat_temp": 28
+    "s2": 645,
+    "s2_clear": 305,
+    "landsat": 160,
+    "landsat_temp": 92
    },
-   "first_year": 2025,
-   "freezes": false,
+   "first_year": 2017,
+   "freezes": true,
    "latest": {
     "colour": {
      "date": "2026-09-26",
-     "hue": 196.73,
+     "hue": 199.36,
      "fu": 4,
-     "swatch": "#83a6aa",
-     "ndci": -0.299
+     "swatch": "#72a9b1",
+     "ndci": -0.913
     },
     "temp": {
      "date": "2026-09-17",
@@ -333,15 +743,33 @@
    },
    "verdict": {
     "year": 2026,
-    "level": null,
-    "label": "BASELINE",
+    "level": 2,
+    "label": "ELEVATED",
     "signals": {
-     "colour": null,
-     "ndci": null,
-     "temp": null,
+     "colour": {
+      "now": 158.9,
+      "baseline": 141.3,
+      "spread": 3.558,
+      "z": -4.95,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.161,
+      "baseline": -0.27,
+      "spread": 0.043,
+      "z": 2.54,
+      "years": 9
+     },
+     "temp": {
+      "now": 18.1,
+      "baseline": 17.7,
+      "spread": 1.483,
+      "z": 0.27,
+      "years": 9
+     },
      "ice_out": null
     },
-    "why": "Not enough past summers yet to say what normal looks like."
+    "why": "More chlorophyll signal than usual."
    }
   },
   {
@@ -355,18 +783,59 @@
    "kind": "reservoir",
    "notes": "Olympic Peninsula reservoir, a low-elevation comparison.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 16.441,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 300,
+    "s2_clear": 147,
+    "landsat": 127,
+    "landsat_temp": 73
    },
-   "first_year": null,
+   "first_year": 2017,
    "freezes": false,
-   "latest": {},
-   "verdict": null
+   "latest": {
+    "colour": {
+     "date": "2026-09-18",
+     "hue": 211.96,
+     "fu": 3,
+     "swatch": "#82a5b8",
+     "ndci": -0.1489
+    },
+    "temp": {
+     "date": "2026-09-16",
+     "c": 18.89
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 200.6,
+      "baseline": 181.2,
+      "spread": 6.079,
+      "z": -3.19,
+      "years": 9
+     },
+     "ndci": {
+      "now": -0.1702,
+      "baseline": -0.09,
+      "spread": 0.071,
+      "z": -1.13,
+      "years": 9
+     },
+     "temp": {
+      "now": 21.1,
+      "baseline": 22.7,
+      "spread": 0.75,
+      "z": -2.13,
+      "years": 7
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "spirit_lake",
@@ -379,18 +848,59 @@
    "kind": "clear",
    "notes": "Remade by the 1980 eruption; part of it is still covered by a log mat.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 10.391,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 562,
+    "s2_clear": 164,
+    "landsat": 148,
+    "landsat_temp": 93
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-28",
+     "hue": 179.87,
+     "fu": 5,
+     "swatch": "#00c4af",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-17",
+     "c": 16.65
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 193.7,
+      "baseline": 187.5,
+      "spread": 15.271,
+      "z": -0.41,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 20.6,
+      "baseline": 21.4,
+      "spread": 0.75,
+      "z": -1.07,
+      "years": 8
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "crater_lake",
@@ -406,19 +916,19 @@
    "area_km2": 53.107,
    "sampled": "3 km circle",
    "scenes": {
-    "s2": 89,
-    "s2_clear": 58,
-    "landsat": 41,
-    "landsat_temp": 34
+    "s2": 391,
+    "s2_clear": 295,
+    "landsat": 163,
+    "landsat_temp": 139
    },
-   "first_year": 2025,
+   "first_year": 2017,
    "freezes": false,
    "latest": {
     "colour": {
      "date": "2026-09-28",
-     "hue": 223.89,
+     "hue": 224.19,
      "fu": 2,
-     "swatch": "#00aaff",
+     "swatch": "#00a8ff",
      "ndci": 0.0
     },
     "temp": {
@@ -428,15 +938,33 @@
    },
    "verdict": {
     "year": 2026,
-    "level": null,
-    "label": "BASELINE",
+    "level": 0,
+    "label": "STEADY",
     "signals": {
-     "colour": null,
-     "ndci": null,
-     "temp": null,
+     "colour": {
+      "now": 227.4,
+      "baseline": 226.7,
+      "spread": 3.0,
+      "z": -0.23,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0798,
+      "baseline": 0.062,
+      "spread": 0.091,
+      "z": 0.2,
+      "years": 9
+     },
+     "temp": {
+      "now": 17.2,
+      "baseline": 17.8,
+      "spread": 0.75,
+      "z": -0.8,
+      "years": 9
+     },
      "ice_out": null
     },
-    "why": "Not enough past summers yet to say what normal looks like."
+    "why": "Within its usual range."
    }
   },
   {
@@ -450,18 +978,59 @@
    "kind": "clear",
    "notes": "High Cascade lake by Willamette Pass, with years of Oregon ground sampling.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 13.982,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 368,
+    "s2_clear": 224,
+    "landsat": 163,
+    "landsat_temp": 126
    },
-   "first_year": null,
+   "first_year": 2017,
    "freezes": false,
-   "latest": {},
-   "verdict": null
+   "latest": {
+    "colour": {
+     "date": "2026-09-28",
+     "hue": 128.36,
+     "fu": 7,
+     "swatch": "#64b167",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-26",
+     "c": 14.51
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 128.4,
+      "baseline": 122.6,
+      "spread": 43.885,
+      "z": -0.13,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.116,
+      "spread": 0.111,
+      "z": -1.04,
+      "years": 9
+     },
+     "temp": {
+      "now": 19.1,
+      "baseline": 20.3,
+      "spread": 0.75,
+      "z": -1.6,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   },
   {
    "id": "waldo_lake",
@@ -474,18 +1043,59 @@
    "kind": "clear",
    "notes": "Among the purest lakes in the world. The control group.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 24.516,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 367,
+    "s2_clear": 253,
+    "landsat": 376,
+    "landsat_temp": 279
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2017,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-09-28",
+     "hue": 221.91,
+     "fu": 2,
+     "swatch": "#00abf4",
+     "ndci": 0.0
+    },
+    "temp": {
+     "date": "2026-09-26",
+     "c": 14.18
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": 0,
+    "label": "STEADY",
+    "signals": {
+     "colour": {
+      "now": 221.9,
+      "baseline": 224.0,
+      "spread": 3.0,
+      "z": 0.7,
+      "years": 9
+     },
+     "ndci": {
+      "now": 0.0,
+      "baseline": 0.0,
+      "spread": 0.01,
+      "z": 0.0,
+      "years": 9
+     },
+     "temp": {
+      "now": 18.7,
+      "baseline": 19.2,
+      "spread": 0.75,
+      "z": -0.67,
+      "years": 9
+     },
+     "ice_out": null
+    },
+    "why": "Within its usual range."
+   }
   }
  ]
 }

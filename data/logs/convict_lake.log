@@ -1,0 +1,30 @@
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The `project` field is deprecated. Use `workspace` instead.
+   ╭─[/home/runner/work/Alpine-watch/Alpine-watch/pixi.toml:1:1]
+ 1 │ ╭─▶ [project]
+ 2 │ │   name = "alpine-watch"
+ 3 │ │   version = "0.2.0"
+ 4 │ │   description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
+ 5 │ │   authors = ["Brooks Groves <bdgroves@github>"]
+ 6 │ │   channels = ["conda-forge"]
+ 7 │ ├─▶ platforms = ["win-64", "linux-64", "osx-arm64"]
+   · ╰──── replace this with 'workspace'
+ 8 │     
+   ╰────
+
+✨ Pixi task (space): python scripts/space.py convict_lake --since 2017-03-01
+── Convict Lake: 0.71 km², shore buffer 40/60 m
+  Sentinel-2: 471 days, 471 new
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  S2: 100/471 in 50 s
+  S2: 200/471 in 84 s
+  S2: 300/471 in 108 s
+  S2: 400/471 in 125 s
+  Sentinel-2: 471 scenes on file, 233 with a clear colour reading
+  Landsat: 197 scenes, 197 new
+  LS: 100/197 in 29 s
+  Landsat: 197 scenes on file, 142 with a temperature
+  Convict Lake done in 205 s

@@ -1,0 +1,32 @@
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The `project` field is deprecated. Use `workspace` instead.
+   ╭─[/home/runner/work/Alpine-watch/Alpine-watch/pixi.toml:1:1]
+ 1 │ ╭─▶ [project]
+ 2 │ │   name = "alpine-watch"
+ 3 │ │   version = "0.2.0"
+ 4 │ │   description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
+ 5 │ │   authors = ["Brooks Groves <bdgroves@github>"]
+ 6 │ │   channels = ["conda-forge"]
+ 7 │ ├─▶ platforms = ["win-64", "linux-64", "osx-arm64"]
+   · ╰──── replace this with 'workspace'
+ 8 │     
+   ╰────
+
+✨ Pixi task (space): python scripts/space.py lake_tahoe --since 2017-03-01
+── Lake Tahoe: 498.47 km² (3 km circle), shore buffer 40/60 m
+  Sentinel-2: 888 days, 888 new
+  S2: 100/888 in 27 s
+  S2: 200/888 in 55 s
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  S2: 300/888 in 81 s
+  S2: 400/888 in 108 s
+  S2: 500/888 in 131 s
+  S2: 600/888 in 153 s
+  S2: 700/888 in 175 s
+  S2: 800/888 in 194 s
+  Sentinel-2: 888 scenes on file, 726 with a clear colour reading
+  Landsat: 196 scenes, 196 new
+  LS: 100/196 in 30 s
+  Landsat: 196 scenes on file, 159 with a temperature
+  Lake Tahoe done in 304 s

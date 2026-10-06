@@ -12,13 +12,20 @@
  8 │     
    ╰────
 
-✨ Pixi task (space): python scripts/space.py diablo_lake --since 2025-03-01
+✨ Pixi task (space): python scripts/space.py diablo_lake --since 2017-03-01
 ── Diablo Lake: 2.84 km², shore buffer 40/60 m
-  Sentinel-2: 136 days, 136 new
+  Sentinel-2: 645 days, 645 new
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  S2: 100/136 in 27 s
-  Sentinel-2: 136 scenes on file, 88 with a clear colour reading
-  Landsat: 47 scenes, 47 new
-  Landsat: 47 scenes on file, 28 with a temperature
-  Diablo Lake done in 136 s
+  S2: 100/645 in 31 s
+  S2: 200/645 in 57 s
+  S2: 300/645 in 77 s
+  S2: 400/645 in 90 s
+  S2: 500/645 in 101 s
+  S2: 600/645 in 109 s
+  Sentinel-2: 645 scenes on file, 409 with a clear colour reading
+  Landsat: 161 scenes, 161 new
+  LS LC08_L2SP_046026_20221101_02_T1: RasterioIOError: '/vsicurl/https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/046/026/LC08_L2SP_046026
+  LS: 100/161 in 21 s
+  Landsat: 160 scenes on file, 92 with a temperature
+  Diablo Lake done in 190 s

@@ -12,16 +12,21 @@
  8 │     
    ╰────
 
-✨ Pixi task (space): python scripts/space.py kibbie_lake --since 2025-03-01
+✨ Pixi task (space): python scripts/space.py kibbie_lake --since 2017-03-01
 ── Kibbie Lake: 0.49 km², shore buffer 40/60 m
-  Sentinel-2: 102 days, 102 new
+  Sentinel-2: 462 days, 462 new
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  S2: 100/102 in 65 s
-  Sentinel-2: 102 scenes on file, 7 with a clear colour reading
-  Landsat: 143 scenes, 143 new
-/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
-  _rasterize(
-  LS: 100/143 in 33 s
-  Landsat: 143 scenes on file, 99 with a temperature
-  Kibbie Lake done in 132 s
+  S2: 100/462 in 29 s
+  S2: 200/462 in 58 s
+  S2: 300/462 in 82 s
+  S2: 400/462 in 100 s
+  Sentinel-2: 462 scenes on file, 23 with a clear colour reading
+  Landsat: 592 scenes, 592 new
+  LS: 100/592 in 32 s
+  LS: 200/592 in 59 s
+  LS: 300/592 in 85 s
+  LS: 400/592 in 111 s
+  LS: 500/592 in 142 s
+  Landsat: 592 scenes on file, 395 with a temperature
+  Kibbie Lake done in 287 s

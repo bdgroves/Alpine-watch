@@ -1,0 +1,32 @@
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The `project` field is deprecated. Use `workspace` instead.
+   ╭─[/home/runner/work/Alpine-watch/Alpine-watch/pixi.toml:1:1]
+ 1 │ ╭─▶ [project]
+ 2 │ │   name = "alpine-watch"
+ 3 │ │   version = "0.2.0"
+ 4 │ │   description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
+ 5 │ │   authors = ["Brooks Groves <bdgroves@github>"]
+ 6 │ │   channels = ["conda-forge"]
+ 7 │ ├─▶ platforms = ["win-64", "linux-64", "osx-arm64"]
+   · ╰──── replace this with 'workspace'
+ 8 │     
+   ╰────
+
+✨ Pixi task (space): python scripts/space.py donner_lake --since 2017-03-01
+── Donner Lake: 3.43 km², shore buffer 40/60 m
+  Sentinel-2: 889 days, 889 new
+  S2: 100/889 in 30 s
+  S2: 200/889 in 61 s
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  S2: 300/889 in 88 s
+  S2: 400/889 in 116 s
+  S2: 500/889 in 141 s
+  S2: 600/889 in 166 s
+  S2: 700/889 in 187 s
+  S2: 800/889 in 207 s
+  Sentinel-2: 889 scenes on file, 369 with a clear colour reading
+  Landsat: 196 scenes, 196 new
+  LS: 100/196 in 31 s
+  Landsat: 196 scenes on file, 151 with a temperature
+  Donner Lake done in 302 s

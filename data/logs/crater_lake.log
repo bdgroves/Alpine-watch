@@ -12,12 +12,16 @@
  8 │     
    ╰────
 
-✨ Pixi task (space): python scripts/space.py crater_lake --since 2025-03-01
+✨ Pixi task (space): python scripts/space.py crater_lake --since 2017-03-01
 ── Crater Lake: 53.11 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 89 days, 89 new
+  Sentinel-2: 391 days, 391 new
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  Sentinel-2: 89 scenes on file, 71 with a clear colour reading
-  Landsat: 41 scenes, 41 new
-  Landsat: 41 scenes on file, 34 with a temperature
-  Crater Lake done in 135 s
+  S2: 100/391 in 48 s
+  S2: 200/391 in 85 s
+  S2: 300/391 in 115 s
+  Sentinel-2: 391 scenes on file, 348 with a clear colour reading
+  Landsat: 163 scenes, 163 new
+  LS: 100/163 in 37 s
+  Landsat: 163 scenes on file, 139 with a temperature
+  Crater Lake done in 205 s

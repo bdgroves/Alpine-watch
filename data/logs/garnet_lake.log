@@ -1,0 +1,28 @@
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The `project` field is deprecated. Use `workspace` instead.
+   ╭─[/home/runner/work/Alpine-watch/Alpine-watch/pixi.toml:1:1]
+ 1 │ ╭─▶ [project]
+ 2 │ │   name = "alpine-watch"
+ 3 │ │   version = "0.2.0"
+ 4 │ │   description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
+ 5 │ │   authors = ["Brooks Groves <bdgroves@github>"]
+ 6 │ │   channels = ["conda-forge"]
+ 7 │ ├─▶ platforms = ["win-64", "linux-64", "osx-arm64"]
+   · ╰──── replace this with 'workspace'
+ 8 │     
+   ╰────
+
+✨ Pixi task (space): python scripts/space.py garnet_lake --since 2017-03-01
+── Garnet Lake: 0.86 km², shore buffer 40/60 m
+  Sentinel-2: 470 days, 470 new
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  S2: 100/470 in 33 s
+  S2: 200/470 in 63 s
+  S2: 300/470 in 85 s
+  S2: 400/470 in 97 s
+  Sentinel-2: 470 scenes on file, 116 with a clear colour reading
+  Landsat: 198 scenes, 198 new
+  LS: 100/198 in 29 s
+  Landsat: 198 scenes on file, 82 with a temperature
+  Garnet Lake done in 185 s
