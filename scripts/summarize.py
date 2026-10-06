@@ -51,6 +51,11 @@ WARM = (7, 8)
 LABELS = {0: "STEADY", 1: "WATCH", 2: "ELEVATED", 3: "ALERT"}
 MIN_SCENES = 3          # scenes for a summer to count
 MIN_YEARS = 3           # summers of baseline before judging
+# ESA moved Sentinel-2 to processing baseline 04.00 in January 2022, and the
+# archive before that was corrected with older versions of Sen2Cor. Over dark
+# water the change is big enough to shift the colour of most lakes by itself
+# (bluer, less red-edge), so colour and NDCI are only compared from 2022 on.
+COLOUR_FROM = 2022
 
 
 def robust(vals, floor):
@@ -122,7 +127,7 @@ def yearly(s2: pd.DataFrame, ls: pd.DataFrame):
     if not s2.empty:
         d = clean(s2)
         d["date"] = pd.to_datetime(d["date"])
-        d = d[d.date.dt.month.isin(SUMMER)]
+        d = d[d.date.dt.month.isin(SUMMER) & (d.date.dt.year >= COLOUR_FROM)]
         for yr, g in d.groupby(d.date.dt.year):
             if len(g) < MIN_SCENES:
                 continue
@@ -143,7 +148,7 @@ def yearly(s2: pd.DataFrame, ls: pd.DataFrame):
     return years
 
 
-def judge(years: dict, ice: dict, now_year: int):
+def judge(years: dict, ice: dict, now_year: int, kind: str = "clear"):
     """This summer against the lake's own baseline."""
     ys = sorted(years)
     cur_year = max((y for y in ys if {"hue", "lswt", "ice_out_doy"} & set(years[y])), default=None)
@@ -162,8 +167,8 @@ def judge(years: dict, ice: dict, now_year: int):
         return {"now": cur[key], "baseline": round(med, 3), "spread": round(spread, 3),
                 "z": round(z, 2), "years": len(b)}
 
-    sig["colour"] = z_of("hue", 3.0, -1)          # hue falling = greener
-    sig["ndci"] = z_of("ndci", 0.01, +1)
+    sig["colour"] = z_of("hue", 8.0, -1)          # hue falling = greener; 8° floor: summers swing that much on their own
+    sig["ndci"] = z_of("ndci", 0.02, +1)
     sig["temp"] = z_of("lswt", 0.75, +1)
     ice_base = [ice[y]["doy"] for y in ice if y < cur_year]
     if cur_year in ice and len(ice_base) >= MIN_YEARS:
@@ -177,25 +182,33 @@ def judge(years: dict, ice: dict, now_year: int):
     if not zs:
         return {"year": cur_year, "level": None, "label": "BASELINE", "signals": sig,
                 "why": "Not enough past summers yet to say what normal looks like."}
+    # Diablo's colour is glacial flour and Mono's is brine shrimp and salt-loving
+    # algae: their colour and chlorophyll index are shown but don't raise a flag.
+    context_only = {"ice_out"} | ({"colour", "ndci"} if kind in ("glacial", "saline") else set())
     level = 0
     for k, z in zs.items():
-        if k == "ice_out":
+        if k in context_only:
             continue                          # early ice-out is context, not an alarm on its own
         if z >= 2.5:
             level = max(level, 2)
         elif z >= 1.5:
             level = max(level, 1)
-    raised = [k for k, z in zs.items() if k != "ice_out" and z >= 1.5]
+    raised = [k for k, z in zs.items() if k not in context_only and z >= 1.5]
     if len(raised) >= 2:
         level = max(level, 2)
-    if (zs.get("colour", 0) >= 2.5 and zs.get("ndci", 0) >= 2.5
+    if ("colour" not in context_only and zs.get("colour", 0) >= 2.5 and zs.get("ndci", 0) >= 2.5
             and (sig["ndci"]["now"] or 0) > 0.05):
         level = 3
     words = {"colour": "greener than usual", "ndci": "more chlorophyll signal than usual",
              "temp": "warmer than usual", "ice_out": "ice went out early"}
-    why = [words[k] for k, z in sorted(zs.items(), key=lambda kv: -kv[1]) if z >= 1.5]
+    why = [words[k] for k, z in sorted(zs.items(), key=lambda kv: -kv[1])
+           if z >= 1.5 and k not in context_only]
+    nwords = {"colour": "greener than usual", "ndci": "showing more chlorophyll signal than usual"}
+    note = [nwords[k] for k, z in sorted(zs.items(), key=lambda kv: -kv[1])
+            if z >= 1.5 and k in nwords and k in context_only]
     return {"year": cur_year, "level": level, "label": LABELS[level], "signals": sig,
-            "why": ("; ".join(why).capitalize() + ".") if why else "Within its usual range."}
+            "why": (("; ".join(why).capitalize() + ".") if why else "Within its usual range.")
+                   + (f" It's {' and '.join(note)}, but for a {'glacial' if kind == 'glacial' else 'salt'} lake that isn't a warning sign on its own." if note else "")}
 
 
 def latest(s2: pd.DataFrame, ls: pd.DataFrame):
@@ -249,7 +262,7 @@ def main():
         years = yearly(s2, ls if t_ok else pd.DataFrame())
         for y, v in ice.items():
             years.setdefault(y, {})["ice_out_doy"] = v["doy"]
-        verdict = judge(years, ice, now_year) if years else None
+        verdict = judge(years, ice, now_year, lake.get("kind", "clear")) if years else None
         n_clear = int(len(clean(s2))) if not s2.empty else 0
         n_temp = int(ls["lswt_c"].notna().sum()) if ("lswt_c" in ls and t_ok) else 0
         summary = {k: lake.get(k) for k in ("id", "name", "range", "state", "elevation_ft", "lat", "lon",

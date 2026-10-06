@@ -29,7 +29,7 @@ The first version pulled samples from the Water Quality Portal. It turned out th
 
 | What | From | How |
 |---|---|---|
-| **Water colour** | Sentinel-2 L2A, 2017– | Median surface reflectance of open water (40 m in from shore; big lakes inside a 3 km circle), converted to a hue angle and a **Forel-Ule** number with the Van der Woerd & Wernand Sentinel-2 coefficients (the same constants as ESA SNAP's FU operator and ACOLITE) |
+| **Water colour** | Sentinel-2 L2A, judged from 2022 (ESA's January 2022 processing change shifts dark-water colour on its own) | Median surface reflectance of open water (40 m in from shore; big lakes inside a 3 km circle), converted to a hue angle and a **Forel-Ule** number with the Van der Woerd & Wernand Sentinel-2 coefficients (the same constants as ESA SNAP's FU operator and ACOLITE) |
 | **Chlorophyll index** | Sentinel-2 | NDCI, red-edge vs red. Shown as an index, never as µg/L, and left blank for lakes too clear to read it |
 | **Ice-out** | Sentinel-2 scene classification | The spring day the lake opened, for lakes seen ice-covered in March/April in 3+ years |
 | **Surface temperature** | Landsat 8/9 Collection 2, 2013– | Median July–August skin temperature, only for lakes with a core of water 150 m+ from shore (Landsat's thermal pixels are 100 m; narrow granite lakes read hot) |
