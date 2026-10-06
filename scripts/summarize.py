@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+"""
+Turn the per-scene satellite readings into what the dashboard shows.
+
+For each lake, summer by summer (July to September, ice-free scenes only):
+  colour     median hue angle and its Forel-Ule number (lower hue = greener)
+  NDCI       median chlorophyll index
+  temp       Landsat surface temperature, July and August
+  ice-out    the spring date the lake opened up, from Sentinel-2's ice class
+
+Each lake is judged against its own past: this summer's values against the
+median and spread of the summers before it. Writes docs/data/space.json
+(overview) and docs/data/space/<id>.json (detail).
+"""
+from __future__ import annotations
+
+import datetime as dt
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import yaml
+
+import fu
+
+ROOT = Path(__file__).resolve().parents[1]
+SPACE = ROOT / "data" / "space"
+OUT = ROOT / "docs" / "data"
+SUMMER = (7, 8, 9)
+WARM = (7, 8)
+LABELS = {0: "STEADY", 1: "WATCH", 2: "ELEVATED", 3: "ALERT"}
+MIN_SCENES = 3          # scenes for a summer to count
+MIN_YEARS = 3           # summers of baseline before judging
+
+
+def robust(vals, floor):
+    v = np.asarray([x for x in vals if x is not None and not math.isnan(x)], float)
+    if v.size == 0:
+        return None, None
+    med = float(np.median(v))
+    mad = float(np.median(np.abs(v - med))) * 1.4826
+    return med, max(mad, floor)
+
+
+def ice_out(s2: pd.DataFrame):
+    """Day-of-year the lake opened, per year, from Sentinel-2's ice/snow class."""
+    out = {}
+    if s2.empty or "f_ice" not in s2:
+        return out, False
+    d = s2.dropna(subset=["f_ice", "f_water"]).copy()
+    d = d[(d.f_cloud.fillna(0) < 0.3) & (d.f_nodata.fillna(0) < 0.2)]
+    d["date"] = pd.to_datetime(d["date"])
+    freezes = bool(((d.date.dt.month <= 4) & (d.f_ice >= 0.5)).any())
+    for yr, g in d[d.date.dt.month.between(3, 8)].groupby(d.date.dt.year):
+        g = g.sort_values("date")
+        icy = g[g.f_ice >= 0.5]
+        if icy.empty:
+            continue
+        last_ice = icy.date.max()
+        opened = g[(g.date > last_ice) & (g.f_water >= 0.8) & (g.f_ice < 0.05)]
+        if opened.empty:
+            continue
+        first_open = opened.date.min()
+        gap = (first_open - last_ice).days
+        if gap > 24:
+            continue
+        mid = last_ice + (first_open - last_ice) / 2
+        out[int(yr)] = {"doy": int(mid.dayofyear), "date": mid.date().isoformat(),
+                        "between": [last_ice.date().isoformat(), first_open.date().isoformat()]}
+    return out, freezes
+
+
+def yearly(s2: pd.DataFrame, ls: pd.DataFrame):
+    years = {}
+    if not s2.empty and "hue" in s2:
+        d = s2.dropna(subset=["hue"]).copy()
+        d["date"] = pd.to_datetime(d["date"])
+        d = d[d.date.dt.month.isin(SUMMER) & (d.f_ice.fillna(0) < 0.05) & (d.f_cloud.fillna(0) < 0.2)]
+        for yr, g in d.groupby(d.date.dt.year):
+            if len(g) < MIN_SCENES:
+                continue
+            hue = float(g.hue.median())
+            years.setdefault(int(yr), {}).update({
+                "hue": round(hue, 1), "fu": fu.forel_ule(hue),
+                "ndci": round(float(g.ndci.median()), 4) if g.ndci.notna().any() else None,
+                "n_s2": int(len(g))})
+    if not ls.empty and "lswt_c" in ls:
+        d = ls.dropna(subset=["lswt_c"]).copy()
+        d["date"] = pd.to_datetime(d["date"])
+        d = d[d.date.dt.month.isin(WARM)]
+        for yr, g in d.groupby(d.date.dt.year):
+            if len(g) < 2:
+                continue
+            years.setdefault(int(yr), {}).update({
+                "lswt": round(float(g.lswt_c.median()), 1), "n_ls": int(len(g))})
+    return years
+
+
+def judge(years: dict, ice: dict, now_year: int):
+    """This summer against the lake's own baseline."""
+    ys = sorted(years)
+    cur_year = max((y for y in ys if "hue" in years[y] or "lswt" in years[y]), default=None)
+    if cur_year is None:
+        return None
+    base = [y for y in ys if y < cur_year]
+    cur = years[cur_year]
+    sig = {}
+
+    def z_of(key, floor, sign):
+        b = [years[y][key] for y in base if years[y].get(key) is not None]
+        if len(b) < MIN_YEARS or cur.get(key) is None:
+            return None
+        med, spread = robust(b, floor)
+        z = sign * (cur[key] - med) / spread
+        return {"now": cur[key], "baseline": round(med, 3), "spread": round(spread, 3),
+                "z": round(z, 2), "years": len(b)}
+
+    sig["colour"] = z_of("hue", 3.0, -1)          # hue falling = greener
+    sig["ndci"] = z_of("ndci", 0.01, +1)
+    sig["temp"] = z_of("lswt", 0.75, +1)
+    ice_base = [ice[y]["doy"] for y in ice if y < cur_year]
+    if cur_year in ice and len(ice_base) >= MIN_YEARS:
+        med, spread = robust(ice_base, 5)
+        sig["ice_out"] = {"now": ice[cur_year]["doy"], "baseline": round(med), "spread": round(spread, 1),
+                          "z": round(-(ice[cur_year]["doy"] - med) / spread, 2), "years": len(ice_base)}
+    else:
+        sig["ice_out"] = None
+
+    zs = {k: v["z"] for k, v in sig.items() if v}
+    if not zs:
+        return {"year": cur_year, "level": None, "label": "BASELINE", "signals": sig,
+                "why": "Not enough past summers yet to say what normal looks like."}
+    level = 0
+    for k, z in zs.items():
+        if k == "ice_out":
+            continue                          # early ice-out is context, not an alarm on its own
+        if z >= 2.5:
+            level = max(level, 2)
+        elif z >= 1.5:
+            level = max(level, 1)
+    raised = [k for k, z in zs.items() if k != "ice_out" and z >= 1.5]
+    if len(raised) >= 2:
+        level = max(level, 2)
+    if (zs.get("colour", 0) >= 2.5 and zs.get("ndci", 0) >= 2.5
+            and (sig["ndci"]["now"] or 0) > 0.05):
+        level = 3
+    words = {"colour": "greener than usual", "ndci": "more chlorophyll signal than usual",
+             "temp": "warmer than usual", "ice_out": "ice went out early"}
+    why = [words[k] for k, z in sorted(zs.items(), key=lambda kv: -kv[1]) if z >= 1.5]
+    return {"year": cur_year, "level": level, "label": LABELS[level], "signals": sig,
+            "why": ("; ".join(why).capitalize() + ".") if why else "Within its usual range."}
+
+
+def latest(s2: pd.DataFrame, ls: pd.DataFrame):
+    out = {}
+    if not s2.empty and "hue" in s2:
+        d = s2.dropna(subset=["hue"])
+        d = d[(d.f_ice.fillna(0) < 0.05) & (d.f_cloud.fillna(0) < 0.2)]
+        if not d.empty:
+            r = d.sort_values("date").iloc[-1]
+            out["colour"] = {"date": r.date, "hue": float(r.hue), "fu": int(r.fu) if pd.notna(r.fu) else None,
+                             "swatch": r.swatch if isinstance(r.swatch, str) else None,
+                             "ndci": float(r.ndci) if pd.notna(r.ndci) else None}
+    if not ls.empty and "lswt_c" in ls:
+        d = ls.dropna(subset=["lswt_c"])
+        if not d.empty:
+            r = d.sort_values("date").iloc[-1]
+            out["temp"] = {"date": r.date, "c": float(r.lswt_c)}
+    return out
+
+
+def recent_series(s2: pd.DataFrame, ls: pd.DataFrame, years_back=3):
+    cut = (dt.date.today() - dt.timedelta(days=365 * years_back)).isoformat()
+    ser = {"colour": [], "temp": [], "ice": []}
+    if not s2.empty and "hue" in s2:
+        d = s2[s2.date >= cut]
+        for r in d.itertuples():
+            if pd.notna(getattr(r, "hue", np.nan)) and (r.f_ice or 0) < 0.05 and (r.f_cloud or 0) < 0.2:
+                ser["colour"].append([r.date, round(float(r.hue), 1),
+                                      int(r.fu) if pd.notna(r.fu) else None,
+                                      round(float(r.ndci), 4) if pd.notna(r.ndci) else None,
+                                      r.swatch if isinstance(r.swatch, str) else None])
+            if pd.notna(getattr(r, "f_ice", np.nan)) and (r.f_cloud or 0) < 0.3:
+                ser["ice"].append([r.date, round(float(r.f_ice), 2)])
+    if not ls.empty and "lswt_c" in ls:
+        d = ls[(ls.date >= cut)].dropna(subset=["lswt_c"])
+        ser["temp"] = [[r.date, float(r.lswt_c)] for r in d.itertuples()]
+    return ser
+
+
+def main():
+    lakes = yaml.safe_load((ROOT / "lakes.yaml").read_text())["lakes"]
+    (OUT / "space").mkdir(parents=True, exist_ok=True)
+    rows = []
+    now_year = dt.date.today().year
+    for lake in lakes:
+        s2p, lsp = SPACE / f"{lake['id']}_s2.csv", SPACE / f"{lake['id']}_ls.csv"
+        regp = SPACE / f"{lake['id']}_region.json"
+        s2 = pd.read_csv(s2p) if s2p.exists() else pd.DataFrame()
+        ls = pd.read_csv(lsp) if lsp.exists() else pd.DataFrame()
+        reg = json.loads(regp.read_text()) if regp.exists() else {}
+        ice, freezes = ice_out(s2)
+        years = yearly(s2, ls)
+        for y, v in ice.items():
+            years.setdefault(y, {})["ice_out_doy"] = v["doy"]
+        verdict = judge(years, ice, now_year) if years else None
+        n_clear = int(s2["hue"].notna().sum()) if "hue" in s2 else 0
+        n_temp = int(ls["lswt_c"].notna().sum()) if "lswt_c" in ls else 0
+        summary = {k: lake.get(k) for k in ("id", "name", "range", "state", "elevation_ft", "lat", "lon",
+                                            "kind", "notes")}
+        summary.update({
+            "backcountry": bool(lake.get("backcountry")),
+            "area_km2": reg.get("area_km2"),
+            "sampled": "3 km circle" if reg.get("clipped") else "whole lake",
+            "scenes": {"s2": int(len(s2)), "s2_clear": n_clear, "landsat": int(len(ls)), "landsat_temp": n_temp},
+            "first_year": int(min(years)) if years else None,
+            "freezes": freezes,
+            "latest": latest(s2, ls),
+            "verdict": verdict,
+        })
+        rows.append(summary)
+        detail = {"summary": summary,
+                  "years": [{"year": y, **years[y]} for y in sorted(years)],
+                  "ice_out": {str(k): v for k, v in sorted(ice.items())},
+                  "recent": recent_series(s2, ls),
+                  "region": reg.get("sample_geom")}
+        (OUT / "space" / f"{lake['id']}.json").write_text(json.dumps(detail, separators=(",", ":")))
+        lv = verdict["label"] if verdict else "NO DATA"
+        print(f"= {lake['name']}: {n_clear} clear colour scenes, {n_temp} temperatures, "
+              f"{len(years)} years -> {lv}")
+    meta = {"updated_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+            "lakes": len(rows),
+            "sources": ["Copernicus Sentinel-2 L2A", "USGS Landsat 8/9 Collection 2 L2",
+                        "Microsoft Planetary Computer", "OpenStreetMap"]}
+    (OUT / "space.json").write_text(json.dumps({"meta": meta, "lakes": rows}, indent=1))
+
+
+if __name__ == "__main__":
+    main()

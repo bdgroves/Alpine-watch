@@ -37,7 +37,11 @@ jobs:
           cache: false
           locked: false
       - name: Lake outlines (OpenStreetMap)
-        run: pixi run outlines 2>&1 | tee outlines.log
+        timeout-minutes: 25
+        run: |
+          mkdir -p data/outlines
+          pixi run outlines 2>&1 | tee data/outlines/_log.txt
+          grep -E "^(=|  overpass)" data/outlines/_log.txt | sed 's/^/::notice::/' || true
       - name: Commit outlines
         run: |
           git config user.name "alpine-watch[bot]"; git config user.email "action@github.com"

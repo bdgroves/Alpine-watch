@@ -32,17 +32,18 @@ SERVERS = ["https://overpass-api.de/api/interpreter",
 
 def overpass(q: str) -> dict:
     last = None
-    for attempt in range(6):
+    for attempt in range(5):
         url = SERVERS[attempt % len(SERVERS)]
         try:
             r = requests.post(url, data={"data": q}, timeout=180,
                               headers={"User-Agent": "alpine-watch (github.com/bdgroves/Alpine-watch)"})
             if r.status_code == 200:
                 return r.json()
-            last = f"{url} HTTP {r.status_code}"
+            last = f"{url} HTTP {r.status_code}: {r.text[:200]!r}"
         except requests.RequestException as e:
-            last = f"{url} {e.__class__.__name__}"
-        time.sleep(10 * (attempt + 1))
+            last = f"{url} {e.__class__.__name__}: {e}"
+        print(f"  overpass attempt {attempt + 1}: {last}", flush=True)
+        time.sleep(5 * (attempt + 1))
     raise RuntimeError(f"Overpass failed: {last}")
 
 
@@ -113,24 +114,60 @@ out geom;"""
     return geom, ids, how
 
 
+def batch_by_name(lakes):
+    """One Overpass request for every lake: water polygons with the right name near each point."""
+    parts = []
+    for l in lakes:
+        esc = l["osm_name"].replace('"', '\\"')
+        for t in ("way", "relation"):
+            parts.append(f'{t}["natural"="water"]["name"="{esc}"](around:8000,{l["lat"]},{l["lon"]});')
+            parts.append(f'{t}["water"]["name"="{esc}"](around:8000,{l["lat"]},{l["lon"]});')
+    q = "[out:json][timeout:600];\n(\n" + "\n".join(parts) + "\n);\nout geom;"
+    els = overpass(q).get("elements", [])
+    print(f"= batched query: {len(els)} elements", flush=True)
+    found = {}
+    for l in lakes:
+        pt = Point(l["lon"], l["lat"])
+        mine = [el for el in els if el.get("tags", {}).get("name") == l["osm_name"]]
+        geoms = [(el, element_geometry(el)) for el in mine]
+        geoms = [(el, g) for el, g in geoms if g is not None and not g.is_empty and g.distance(pt) < 0.08]
+        if not geoms:
+            continue
+        holding = [g for _, g in geoms if g.buffer(0.002).contains(pt)]
+        core = holding[0] if holding else min((g for _, g in geoms), key=lambda g: g.distance(pt))
+        near = [g for _, g in geoms if g.distance(core) < 0.003]
+        geom = unary_union(near) if len(near) > 1 else core
+        found[l["id"]] = (geom, [f"{el['type']}/{el['id']}" for el, _ in geoms], "name")
+    return found
+
+
 def main():
     lakes = yaml.safe_load((ROOT / "lakes.yaml").read_text())["lakes"]
     OUT.mkdir(parents=True, exist_ok=True)
     redo = "--all" in sys.argv
     only = [a for a in sys.argv[1:] if not a.startswith("--")]
     ok = 0
+    todo = [l for l in lakes if (not only or l["id"] in only)
+            and (redo or only or not (OUT / f"{l['id']}.geojson").exists())]
+    try:
+        batched = batch_by_name(todo) if todo else {}
+    except Exception as e:  # noqa: BLE001
+        print(f"= batched query failed: {e}")
+        batched = {}
     for lake in lakes:
         if only and lake["id"] not in only:
             continue
         path = OUT / f"{lake['id']}.geojson"
-        if path.exists() and not redo and not only:
+        if lake not in todo:
             ok += 1
             continue
-        try:
-            got = find(lake)
-        except Exception as e:  # noqa: BLE001
-            print(f"= {lake['name']}: Overpass error {e}")
-            continue
+        got = batched.get(lake["id"])
+        if got is None:
+            try:
+                got = find(lake)
+            except Exception as e:  # noqa: BLE001
+                print(f"= {lake['name']}: Overpass error {e}")
+                continue
         if got is None:
             print(f"= {lake['name']}: NO OUTLINE FOUND")
             continue
