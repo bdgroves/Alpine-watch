@@ -13,22 +13,4 @@
    ╰────
 
 ✨ Pixi task (outlines): python scripts/outlines.py
-= batched query: 17 elements
-= Lake Tahoe: 498.472 km² from relation/1823287 (name)
-= Fallen Leaf Lake: 5.659 km² from way/25597557 (name)
-= Donner Lake: 3.428 km² from relation/6659033 (name)
-= Convict Lake: 0.712 km² from way/29185425 (name)
-= Lower Twin Lake (Bridgeport): 1.691 km² from relation/12005445 (name)
-= Mono Lake: 184.192 km² from relation/60081 (name)
-= Kibbie Lake: 0.489 km² from relation/14125318 (name)
-= Many Island Lake: 0.220 km² from relation/14125319 (name)
-= Thousand Island Lake: 1.352 km² from relation/207450 (name)
-= Garnet Lake: 0.856 km² from relation/207453 (name)
-= Lake Chelan: 132.318 km² from relation/446718 (name)
-= Diablo Lake: 2.836 km² from relation/443823 (name)
-= Lake Cushman: 16.441 km² from relation/12118044 (name)
-= Spirit Lake: 10.391 km² from relation/7934191 (name)
-= Crater Lake: 53.107 km² from relation/147401 (name)
-= Odell Lake: 13.982 km² from way/128005865 (name)
-= Waldo Lake: 24.516 km² from relation/1730152 (name)
 = outlines: 17 of 17 lakes
