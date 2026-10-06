@@ -1,13 +1,13 @@
 [project]
 name = "alpine-watch"
-version = "0.1.0"
-description = "Alpine Lake Clarity Monitor — Sierra Nevada & Cascades"
+version = "0.2.0"
+description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
 authors = ["Brooks Groves <bdgroves@github>"]
 channels = ["conda-forge"]
 platforms = ["win-64", "linux-64", "osx-arm64"]
 
 [dependencies]
-python = ">=3.11"
+python = ">=3.11,<3.13"
 requests = ">=2.31"
 pandas = ">=2.1"
 numpy = ">=1.26"
@@ -16,8 +16,17 @@ scipy = ">=1.11"
 pillow = ">=10.0"
 python-dateutil = ">=2.8"
 dataretrieval = ">=1.0"
+pyyaml = "*"
+shapely = ">=2.0"
+pyproj = "*"
+rasterio = ">=1.3"
+pystac-client = "*"
+planetary-computer = "*"
 
 [tasks]
 fetch = "python scripts/fetch_lakes.py"
 render = "python scripts/render_charts.py"
+outlines = "python scripts/outlines.py"
+space = "python scripts/space.py"
+summarize = "python scripts/summarize.py"
 build = { depends-on = ["fetch", "render"] }

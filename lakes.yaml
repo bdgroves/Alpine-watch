@@ -1,0 +1,220 @@
+# ALPINE-WATCH lake catalog.
+#
+# Every lake is watched from space (Sentinel-2 colour and chlorophyll index,
+# ice-out, Landsat surface temperature). Lakes with ground sampling in the
+# Water Quality Portal also get those numbers as ground truth.
+#
+#   osm_name   the lake's name in OpenStreetMap; the outline is looked up by
+#              name within 8 km of lat/lon (or, failing that, whatever water
+#              polygon contains lat/lon)
+#   kind       clear | glacial | saline | reservoir  (how to read its colour)
+#   backcountry  true for lakes with no road and no regular ground sampling
+#   wqp        look for ground samples in the Water Quality Portal
+#
+# Big lakes are sampled inside a 3 km circle around lat/lon, so the reading
+# is the same patch of open water every time.
+
+lakes:
+  - id: lake_tahoe
+    name: Lake Tahoe
+    osm_name: Lake Tahoe
+    range: Sierra Nevada
+    state: CA/NV
+    elevation_ft: 6225
+    lat: 39.0968
+    lon: -120.0324
+    kind: clear
+    wqp: true
+    notes: The gold standard. UC Davis has measured its clarity since 1968.
+
+  - id: fallen_leaf
+    name: Fallen Leaf Lake
+    osm_name: Fallen Leaf Lake
+    range: Sierra Nevada
+    state: CA
+    elevation_ft: 6377
+    lat: 38.8968
+    lon: -120.0574
+    kind: clear
+    wqp: true
+    notes: Tahoe's neighbour, a canary for nutrients in the basin.
+
+  - id: donner_lake
+    name: Donner Lake
+    osm_name: Donner Lake
+    range: Sierra Nevada
+    state: CA
+    elevation_ft: 5936
+    lat: 39.3196
+    lon: -120.2700
+    kind: clear
+    wqp: true
+    notes: Interstate 80 runs along its shore; busy in summer.
+
+  - id: convict_lake
+    name: Convict Lake
+    osm_name: Convict Lake
+    range: Eastern Sierra
+    state: CA
+    elevation_ft: 7583
+    lat: 37.5896
+    lon: -118.8577
+    kind: clear
+    wqp: true
+    notes: Deep, cold and close to the road, under Laurel Mountain.
+
+  - id: twin_lakes_bridgeport
+    name: Lower Twin Lake (Bridgeport)
+    osm_name: Lower Twin Lake
+    range: Eastern Sierra
+    state: CA
+    elevation_ft: 7000
+    lat: 38.1700
+    lon: -119.3400
+    kind: clear
+    wqp: true
+    notes: Below Sawtooth Ridge, at the edge of the Hoover Wilderness.
+
+  - id: mono_lake
+    name: Mono Lake
+    osm_name: Mono Lake
+    range: Eastern Sierra
+    state: CA
+    elevation_ft: 6383
+    lat: 37.9799
+    lon: -119.0198
+    kind: saline
+    wqp: true
+    notes: Salty and alkaline with no outlet; its colour follows brine shrimp and algae, not the rules for freshwater.
+
+  - id: kibbie_lake
+    name: Kibbie Lake
+    osm_name: Kibbie Lake
+    range: Yosemite backcountry
+    state: CA
+    elevation_ft: 6516
+    lat: 38.0538
+    lon: -119.8457
+    kind: clear
+    backcountry: true
+    notes: The largest natural lake in Yosemite, on granite north of Hetch Hetchy. Trail only.
+
+  - id: many_island_lake
+    name: Many Island Lake
+    osm_name: Many Island Lake
+    range: Yosemite backcountry
+    state: CA
+    elevation_ft: 7325
+    lat: 38.0836
+    lon: -119.8116
+    kind: clear
+    backcountry: true
+    notes: About 48 acres of water among granite islands, a long day's walk up Kibbie Ridge.
+
+  - id: thousand_island_lake
+    name: Thousand Island Lake
+    osm_name: Thousand Island Lake
+    range: Ansel Adams Wilderness
+    state: CA
+    elevation_ft: 9833
+    lat: 37.7230
+    lon: -119.1840
+    kind: clear
+    backcountry: true
+    notes: Under Banner Peak on the John Muir Trail. Ice-out often comes in July.
+
+  - id: garnet_lake
+    name: Garnet Lake
+    osm_name: Garnet Lake
+    range: Ansel Adams Wilderness
+    state: CA
+    elevation_ft: 9680
+    lat: 37.7020
+    lon: -119.1470
+    kind: clear
+    backcountry: true
+    notes: Thousand Island's neighbour on the JMT, under Mount Ritter.
+
+  - id: lake_chelan
+    name: Lake Chelan
+    osm_name: Lake Chelan
+    range: North Cascades
+    state: WA
+    elevation_ft: 1086
+    lat: 47.9300
+    lon: -120.2000
+    kind: clear
+    wqp: true
+    notes: 1,486 ft deep, one of the deepest lakes in North America.
+
+  - id: diablo_lake
+    name: Diablo Lake
+    osm_name: Diablo Lake
+    range: North Cascades
+    state: WA
+    elevation_ft: 1201
+    lat: 48.7154
+    lon: -121.1376
+    kind: glacial
+    wqp: true
+    notes: Turquoise from glacial flour. Its colour tracks the glaciers upstream more than algae.
+
+  - id: lake_cushman
+    name: Lake Cushman
+    osm_name: Lake Cushman
+    range: Olympics
+    state: WA
+    elevation_ft: 738
+    lat: 47.4685
+    lon: -123.2300
+    kind: reservoir
+    wqp: true
+    notes: Olympic Peninsula reservoir, a low-elevation comparison.
+
+  - id: spirit_lake
+    name: Spirit Lake
+    osm_name: Spirit Lake
+    range: Cascades / St. Helens
+    state: WA
+    elevation_ft: 3417
+    lat: 46.2754
+    lon: -122.1413
+    kind: clear
+    wqp: true
+    notes: Remade by the 1980 eruption; part of it is still covered by a log mat.
+
+  - id: crater_lake
+    name: Crater Lake
+    osm_name: Crater Lake
+    range: Cascades
+    state: OR
+    elevation_ft: 6178
+    lat: 42.9446
+    lon: -122.1090
+    kind: clear
+    wqp: true
+    notes: Deepest lake in the US, and one of the clearest anywhere.
+
+  - id: odell_lake
+    name: Odell Lake
+    osm_name: Odell Lake
+    range: Cascades
+    state: OR
+    elevation_ft: 4787
+    lat: 43.5568
+    lon: -122.0054
+    kind: clear
+    wqp: true
+    notes: High Cascade lake by Willamette Pass, with years of Oregon ground sampling.
+
+  - id: waldo_lake
+    name: Waldo Lake
+    osm_name: Waldo Lake
+    range: Cascades
+    state: OR
+    elevation_ft: 5414
+    lat: 43.7318
+    lon: -122.0454
+    kind: clear
+    wqp: true
+    notes: Among the purest lakes in the world. The control group.

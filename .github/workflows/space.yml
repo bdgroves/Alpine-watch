@@ -1,0 +1,123 @@
+name: alpine-watch · from space
+
+# Lake outlines from OpenStreetMap, then for each lake: Sentinel-2 colour,
+# chlorophyll index and ice, and Landsat surface temperature, read a window
+# at a time from Microsoft Planetary Computer. Incremental: only new scenes.
+on:
+  schedule:
+    - cron: "17 7 * * 1"          # Mondays
+  workflow_dispatch:
+    inputs:
+      lakes:
+        description: "Lake ids, comma-separated, or 'all'"
+        default: "all"
+      since:
+        description: "Start date for the scene search"
+        default: "2017-03-01"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: space
+  cancel-in-progress: false
+
+env:
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  outlines:
+    runs-on: ubuntu-latest
+    outputs:
+      lakes: ${{ steps.p.outputs.lakes }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: prefix-dev/setup-pixi@v0.9.0
+        with:
+          cache: false
+          locked: false
+      - name: Lake outlines (OpenStreetMap)
+        run: pixi run outlines 2>&1 | tee outlines.log
+      - name: Commit outlines
+        run: |
+          git config user.name "alpine-watch[bot]"; git config user.email "action@github.com"
+          git add data/outlines
+          git diff --staged --quiet || (git commit -m "🗺️ lake outlines from OpenStreetMap" && git pull --rebase -q && git push)
+      - id: p
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, pathlib, yaml
+          want = "${{ inputs.lakes || 'all' }}".strip()
+          ids = [l["id"] for l in yaml.safe_load(open("lakes.yaml"))["lakes"]
+                 if pathlib.Path(f"data/outlines/{l['id']}.geojson").exists()]
+          if want not in ("", "all"):
+              ids = [i for i in ids if i in [w.strip() for w in want.split(",")]]
+          print("lakes=" + json.dumps(ids))
+          PY
+
+  lake:
+    needs: outlines
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        lake: ${{ fromJSON(needs.outlines.outputs.lakes) }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+      - run: git pull -q
+      - uses: prefix-dev/setup-pixi@v0.9.0
+        with:
+          cache: false
+          locked: false
+      - name: Satellite readings
+        run: |
+          set -o pipefail
+          pixi run space ${{ matrix.lake }} --since ${{ inputs.since || '2017-03-01' }} 2>&1 | tee space.log
+      - name: Notes for the run summary
+        if: always()
+        run: grep -E "^(──|  Sentinel|  Landsat|  .* done|=)" space.log | sed 's/^/::notice::${{ matrix.lake }} /' || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lake-${{ matrix.lake }}
+          path: |
+            data/space/${{ matrix.lake }}_*
+            docs/chips/${{ matrix.lake }}.*
+            space.log
+          retention-days: 5
+
+  publish:
+    needs: lake
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: git pull -q
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: lake-*
+          path: incoming
+      - uses: prefix-dev/setup-pixi@v0.9.0
+        with:
+          cache: false
+          locked: false
+      - name: Gather
+        run: |
+          mkdir -p data/space docs/chips data/logs
+          for d in incoming/lake-*; do
+            id=${d#incoming/lake-}
+            cp -f $d/data/space/* data/space/ 2>/dev/null || true
+            cp -f $d/docs/chips/* docs/chips/ 2>/dev/null || true
+            cp -f $d/space.log data/logs/$id.log 2>/dev/null || true
+          done
+      - name: Summarize
+        run: test -f scripts/summarize.py && pixi run summarize || echo "no summarize yet"
+      - name: Commit
+        run: |
+          git config user.name "alpine-watch[bot]"; git config user.email "action@github.com"
+          git add data docs
+          git diff --staged --quiet || (git commit -m "🛰️ satellite readings $(date -u +'%Y-%m-%d')" && git pull --rebase -q && git push)
