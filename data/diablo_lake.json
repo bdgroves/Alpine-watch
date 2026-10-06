@@ -1,28 +1,15 @@
 {
-  "summary": {
-    "id": "diablo_lake",
-    "name": "Diablo Lake",
-    "range": "North Cascades",
-    "state": "WA",
-    "elevation_ft": 1201,
-    "lat": 48.7154,
-    "lon": -121.1376,
-    "notes": "Brilliant glacier-flour turquoise; color shift = glacial health signal",
-    "status": "no_data",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
-    "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": null,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "diablo_lake",
+  "name": "Diablo Lake",
+  "range": "North Cascades",
+  "state": "WA",
+  "elevation_ft": 1201,
+  "lat": 48.7154,
+  "lon": -121.1376,
+  "status": "no_data",
+  "sample_count": 0,
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }

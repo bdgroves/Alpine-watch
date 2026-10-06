@@ -1,28 +1,15 @@
 {
-  "summary": {
-    "id": "fallen_leaf",
-    "name": "Fallen Leaf Lake",
-    "range": "Sierra Nevada",
-    "state": "CA",
-    "elevation_ft": 6377,
-    "lat": 38.8968,
-    "lon": -120.0574,
-    "notes": "Tahoe-adjacent; sensitive canary for basin nutrient loading",
-    "status": "ok",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
-    "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": 24.0,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": 0.041,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": "2025-06-20",
-    "sample_count": 45
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "fallen_leaf",
+  "name": "Fallen Leaf Lake",
+  "range": "Sierra Nevada",
+  "state": "CA",
+  "elevation_ft": 6377,
+  "lat": 38.8968,
+  "lon": -120.0574,
+  "status": "no_data",
+  "sample_count": 0,
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }

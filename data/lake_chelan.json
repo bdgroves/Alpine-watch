@@ -1,28 +1,26 @@
 {
-  "summary": {
-    "id": "lake_chelan",
-    "name": "Lake Chelan",
-    "range": "North Cascades",
-    "state": "WA",
-    "elevation_ft": 1086,
-    "lat": 47.8418,
-    "lon": -120.0245,
-    "notes": "One of deepest lakes in North America; exceptional clarity baseline",
-    "status": "ok",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": 28.0,
-    "secchi_unit": "m",
-    "secchi_trend": "insufficient_data",
-    "temp_latest": 19.5,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": "2022-09-27",
-    "sample_count": 6
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "lake_chelan",
+  "name": "Lake Chelan",
+  "range": "North Cascades",
+  "state": "WA",
+  "elevation_ft": 1086,
+  "lat": 47.93,
+  "lon": -120.2,
+  "status": "ok",
+  "sample_count": 16,
+  "last_sample_date": "2022-09-27",
+  "chlorophyll_latest": null,
+  "chlorophyll_date": null,
+  "secchi_latest": 28.0,
+  "secchi_date": "2022-09-27",
+  "temp_latest": 19.5,
+  "phosphorus_latest_mg_l": 0.012,
+  "orgs": [
+   "1119USBR_WQX",
+   "AREMP"
+  ],
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }
