@@ -152,7 +152,7 @@ footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--border);font-
 </section>
 
 <footer>
-  Satellite data: Copernicus Sentinel-2 L2A (ESA) and USGS Landsat 8/9 Collection 2, via Microsoft Planetary Computer · Lake outlines © OpenStreetMap contributors · Ground sampling: Water Quality Portal (USGS, EPA, state agencies) · Map tiles © CARTO<br>
+  Satellite data: Copernicus Sentinel-2 L2A (ESA) and USGS Landsat 8/9 Collection 2, via Microsoft Planetary Computer · Lake outlines © OpenStreetMap contributors · Ground sampling: Water Quality Portal (USGS, EPA, state agencies) · Map tiles: Esri and USGS The National Map<br>
   Built by <a href="https://brooksgroves.com">Brooks Groves</a> · <a href="https://brooksgroves.com/blog/alpine-watch-revisited-post.html">the story behind it</a> · <a href="https://github.com/bdgroves/Alpine-watch">code on GitHub</a> · Inspired by Isabella Oleksy's work on mountain lakes turning green
 </footer>
 </div>
@@ -197,8 +197,20 @@ function label(l) { return l.verdict ? l.verdict.label : "NO DATA"; }
 
 function buildMap() {
   map = L.map("map", {scrollWheelZoom: false}).setView([42.5, -120.8], 5);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: "abcd", maxZoom: 14}).addTo(map);
+  // Keyless basemaps: Esri's public tile services and USGS The National Map.
+  const esri = (svc, extra = {}) => L.tileLayer(`https://server.arcgisonline.com/ArcGIS/rest/services/${svc}/MapServer/tile/{z}/{y}/{x}`,
+    {maxZoom: 17, attribution: "Tiles &copy; Esri", ...extra});
+  const dark = L.layerGroup([
+    esri("Canvas/World_Dark_Gray_Base", {maxNativeZoom: 16, attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors"}),
+    esri("Canvas/World_Dark_Gray_Reference", {maxNativeZoom: 16, attribution: ""})]);
+  const imagery = L.layerGroup([
+    esri("World_Imagery", {attribution: "Tiles &copy; Esri &mdash; Esri, Maxar, Earthstar Geographics, USDA, USGS"}),
+    esri("Reference/World_Boundaries_and_Places", {attribution: ""})]);
+  const topo = esri("World_Topo_Map", {attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, USGS, NPS"});
+  const usgs = L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+    {maxZoom: 17, maxNativeZoom: 16, attribution: "Tiles courtesy of the <a href=\"https://www.usgs.gov/\">U.S. Geological Survey</a>"});
+  dark.addTo(map);
+  L.control.layers({"Dark": dark, "Satellite": imagery, "Terrain": topo, "USGS topo": usgs}, null, {position: "topright"}).addTo(map);
   const b = [];
   LAKES.forEach(l => {
     const m = L.circleMarker([l.lat, l.lon], {radius: l.backcountry ? 7 : 8, color: "#050a12", weight: 2,
