@@ -25,8 +25,7 @@ planetary-computer = "*"
 
 [tasks]
 fetch = "python scripts/fetch_lakes.py"
-render = "python scripts/render_charts.py"
 outlines = "python scripts/outlines.py"
 space = "python scripts/space.py"
 summarize = "python scripts/summarize.py"
-build = { depends-on = ["fetch", "render"] }
+build = { depends-on = ["fetch", "summarize"] }

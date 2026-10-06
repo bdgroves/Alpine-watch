@@ -125,3 +125,12 @@ jobs:
           git config user.name "alpine-watch[bot]"; git config user.email "action@github.com"
           git add data docs
           git diff --staged --quiet || (git commit -m "🛰️ satellite readings $(date -u +'%Y-%m-%d')" && git pull --rebase -q && git push)
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          user_name: "alpine-watch[bot]"
+          user_email: "action@github.com"
+          commit_message: "🛰️ deploy: alpine-watch from space"

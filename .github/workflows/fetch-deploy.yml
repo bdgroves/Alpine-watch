@@ -1,4 +1,4 @@
-name: alpine-watch · fetch & deploy
+name: alpine-watch · ground truth & deploy
 
 on:
   schedule:
@@ -19,32 +19,31 @@ permissions:
 jobs:
   fetch-and-deploy:
     runs-on: ubuntu-latest
-    name: Fetch lake data + render charts + deploy
+    name: Ground samples + deploy
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up pixi
-        uses: prefix-dev/setup-pixi@v0.8.1
+        uses: prefix-dev/setup-pixi@v0.9.0
         with:
-          pixi-version: v0.26.0
           cache: false
+          locked: false
 
-      - name: Fetch lake data (WQP)
-        run: pixi run fetch
-
-      - name: Render charts
-        run: pixi run render
+      - name: Ground samples (Water Quality Portal)
+        run: |
+          pixi run fetch 2>&1 | tee fetch.log
+          grep "^=" fetch.log | sed 's/^/::notice::/' || true
 
       - name: Commit updated data + charts
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "alpine-watch[bot]"
-          git add docs/data/ docs/charts/
+          git add docs/data/
           git diff --staged --quiet || git commit -m \
-            "📡 auto: lake data update $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git push
+            "📡 auto: ground samples $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git pull --rebase -q && git push
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
