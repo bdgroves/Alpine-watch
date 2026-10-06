@@ -1,0 +1,27 @@
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The `project` field is deprecated. Use `workspace` instead.
+   ╭─[/home/runner/work/Alpine-watch/Alpine-watch/pixi.toml:1:1]
+ 1 │ ╭─▶ [project]
+ 2 │ │   name = "alpine-watch"
+ 3 │ │   version = "0.2.0"
+ 4 │ │   description = "Alpine Lake Watch — Sierra Nevada & Cascades, from the ground and from space"
+ 5 │ │   authors = ["Brooks Groves <bdgroves@github>"]
+ 6 │ │   channels = ["conda-forge"]
+ 7 │ ├─▶ platforms = ["win-64", "linux-64", "osx-arm64"]
+   · ╰──── replace this with 'workspace'
+ 8 │     
+   ╰────
+
+✨ Pixi task (space): python scripts/space.py kibbie_lake --since 2025-03-01
+── Kibbie Lake: 0.49 km², shore buffer 40/60 m
+  Sentinel-2: 102 days, 102 new
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  S2: 100/102 in 65 s
+  Sentinel-2: 102 scenes on file, 7 with a clear colour reading
+  Landsat: 143 scenes, 143 new
+/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _rasterize(
+  LS: 100/143 in 33 s
+  Landsat: 143 scenes on file, 99 with a temperature
+  Kibbie Lake done in 132 s

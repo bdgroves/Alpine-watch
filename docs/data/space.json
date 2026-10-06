@@ -1,6 +1,6 @@
 {
  "meta": {
-  "updated_utc": "2026-10-06T15:34:21+00:00",
+  "updated_utc": "2026-10-06T15:38:47+00:00",
   "lakes": 17,
   "sources": [
    "Copernicus Sentinel-2 L2A",
@@ -165,18 +165,41 @@
    "kind": "clear",
    "notes": "The largest natural lake in Yosemite, on granite north of Hetch Hetchy. Trail only.",
    "backcountry": true,
-   "area_km2": null,
+   "area_km2": 0.489,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 102,
+    "s2_clear": 7,
+    "landsat": 143,
+    "landsat_temp": 99
    },
-   "first_year": null,
-   "freezes": false,
-   "latest": {},
-   "verdict": null
+   "first_year": 2025,
+   "freezes": true,
+   "latest": {
+    "colour": {
+     "date": "2026-08-23",
+     "hue": 64.96,
+     "fu": 12,
+     "swatch": "#ab9f86",
+     "ndci": 0.0645
+    },
+    "temp": {
+     "date": "2026-09-28",
+     "c": 17.44
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": null,
+    "label": "BASELINE",
+    "signals": {
+     "colour": null,
+     "ndci": null,
+     "temp": null,
+     "ice_out": null
+    },
+    "why": "Not enough past summers yet to say what normal looks like."
+   }
   },
   {
    "id": "many_island_lake",
@@ -285,18 +308,41 @@
    "kind": "glacial",
    "notes": "Turquoise from glacial flour. Its colour tracks the glaciers upstream more than algae.",
    "backcountry": false,
-   "area_km2": null,
+   "area_km2": 2.836,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 136,
+    "s2_clear": 88,
+    "landsat": 47,
+    "landsat_temp": 28
    },
-   "first_year": null,
+   "first_year": 2025,
    "freezes": false,
-   "latest": {},
-   "verdict": null
+   "latest": {
+    "colour": {
+     "date": "2026-09-26",
+     "hue": 196.73,
+     "fu": 4,
+     "swatch": "#83a6aa",
+     "ndci": -0.299
+    },
+    "temp": {
+     "date": "2026-09-17",
+     "c": 14.7
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": null,
+    "label": "BASELINE",
+    "signals": {
+     "colour": null,
+     "ndci": null,
+     "temp": null,
+     "ice_out": null
+    },
+    "why": "Not enough past summers yet to say what normal looks like."
+   }
   },
   {
    "id": "lake_cushman",
@@ -357,18 +403,41 @@
    "kind": "clear",
    "notes": "Deepest lake in the US, and one of the clearest anywhere.",
    "backcountry": false,
-   "area_km2": null,
-   "sampled": "whole lake",
+   "area_km2": 53.107,
+   "sampled": "3 km circle",
    "scenes": {
-    "s2": 0,
-    "s2_clear": 0,
-    "landsat": 0,
-    "landsat_temp": 0
+    "s2": 89,
+    "s2_clear": 71,
+    "landsat": 41,
+    "landsat_temp": 34
    },
-   "first_year": null,
+   "first_year": 2025,
    "freezes": false,
-   "latest": {},
-   "verdict": null
+   "latest": {
+    "colour": {
+     "date": "2026-09-23",
+     "hue": 221.06,
+     "fu": 2,
+     "swatch": "#9b9faf",
+     "ndci": 0.0663
+    },
+    "temp": {
+     "date": "2026-09-26",
+     "c": 12.57
+    }
+   },
+   "verdict": {
+    "year": 2026,
+    "level": null,
+    "label": "BASELINE",
+    "signals": {
+     "colour": null,
+     "ndci": null,
+     "temp": null,
+     "ice_out": null
+    },
+    "why": "Not enough past summers yet to say what normal looks like."
+   }
   },
   {
    "id": "odell_lake",
