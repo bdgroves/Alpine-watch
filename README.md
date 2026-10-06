@@ -25,7 +25,7 @@ This is the Pacific Coast version of that watch.
 
 ## What changed in October 2026: from the ground to space
 
-The first version pulled samples from the Water Quality Portal. It turned out that **12 of the 13 lakes returned no samples at all**: USGS stopped updating the portal's legacy service in 2024, and much of the work on these lakes (UC Davis at Tahoe, the park service at Crater Lake) was never in it. Most mountain lakes will never see a sampling boat anyway. So the satellites do the looking now, and the portal is kept as ground truth where it exists.
+The first version pulled samples from the Water Quality Portal. It turned out that **8 of the 13 lakes returned no samples at all, and only Odell had any chlorophyll readings**: USGS stopped updating the portal's legacy service in 2024, and much of the work on these lakes (UC Davis at Tahoe, the park service at Crater Lake) was never in it. Most mountain lakes will never see a sampling boat anyway. So the satellites do the looking now, and the portal is kept as ground truth where it exists.
 
 | What | From | How |
 |---|---|---|
