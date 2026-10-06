@@ -1,28 +1,29 @@
 {
-  "summary": {
-    "id": "lake_tahoe",
-    "name": "Lake Tahoe",
-    "range": "Sierra Nevada",
-    "state": "CA/NV",
-    "elevation_ft": 6225,
-    "lat": 39.0968,
-    "lon": -120.0324,
-    "notes": "Iconic clarity barometer; decades of Secchi depth records",
-    "status": "no_data",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
-    "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": null,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "lake_tahoe",
+  "name": "Lake Tahoe",
+  "range": "Sierra Nevada",
+  "state": "CA/NV",
+  "elevation_ft": 6225,
+  "lat": 39.0968,
+  "lon": -120.0324,
+  "status": "ok",
+  "sample_count": 1469,
+  "last_sample_date": "2026-07-15",
+  "chlorophyll_latest": null,
+  "chlorophyll_date": null,
+  "secchi_latest": null,
+  "secchi_date": null,
+  "temp_latest": 14.7,
+  "phosphorus_latest_mg_l": 0.04,
+  "orgs": [
+   "21NEV1_WQX",
+   "CEDEN",
+   "USGS-CA",
+   "USGS-NV",
+   "WASHNVCA_WQX"
+  ],
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }

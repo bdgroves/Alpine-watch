@@ -1,28 +1,15 @@
 {
-  "summary": {
-    "id": "twin_lakes_bridgeport",
-    "name": "Twin Lakes (Bridgeport)",
-    "range": "Eastern Sierra",
-    "state": "CA",
-    "elevation_ft": 7000,
-    "lat": 38.201,
-    "lon": -119.351,
-    "notes": "Paired lakes; useful for spatial comparison",
-    "status": "no_data",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
-    "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": null,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": null,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": null,
-    "sample_count": 0
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "twin_lakes_bridgeport",
+  "name": "Lower Twin Lake (Bridgeport)",
+  "range": "Eastern Sierra",
+  "state": "CA",
+  "elevation_ft": 7000,
+  "lat": 38.17,
+  "lon": -119.34,
+  "status": "no_data",
+  "sample_count": 0,
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }

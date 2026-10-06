@@ -1,28 +1,25 @@
 {
-  "summary": {
-    "id": "convict_lake",
-    "name": "Convict Lake",
-    "range": "Sierra Nevada",
-    "state": "CA",
-    "elevation_ft": 7583,
-    "lat": 37.5896,
-    "lon": -118.8577,
-    "notes": "High-alpine; benchmarked against pristine baselines",
-    "status": "ok",
-    "alert_level": 0,
-    "alert_label": "WATCH",
-    "chlorophyll_latest": null,
-    "chlorophyll_unit": "\u00b5g/L",
-    "chlorophyll_trend": null,
-    "secchi_latest": null,
-    "secchi_unit": "m",
-    "secchi_trend": null,
-    "temp_latest": 15.1,
-    "temp_unit": "\u00b0C",
-    "phosphorus_latest": 0.04,
-    "phosphorus_unit": "mg/L",
-    "last_sample_date": "2022-10-18",
-    "sample_count": 36
-  },
-  "chlorophyll_timeseries": []
+ "summary": {
+  "id": "convict_lake",
+  "name": "Convict Lake",
+  "range": "Eastern Sierra",
+  "state": "CA",
+  "elevation_ft": 7583,
+  "lat": 37.5896,
+  "lon": -118.8577,
+  "status": "ok",
+  "sample_count": 1,
+  "last_sample_date": "2021-06-30",
+  "chlorophyll_latest": null,
+  "chlorophyll_date": null,
+  "secchi_latest": null,
+  "secchi_date": null,
+  "temp_latest": null,
+  "phosphorus_latest_mg_l": 0.04,
+  "orgs": [
+   "CEDEN"
+  ],
+  "errors": []
+ },
+ "summer_chlorophyll": []
 }
