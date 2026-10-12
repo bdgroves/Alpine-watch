@@ -13,16 +13,21 @@
    ╰────
 
 ✨ Pixi task (space): python scripts/space.py mono_lake --since 2017-03-01
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:80: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  poly = transform(fwd, lake4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:81: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  pt = transform(fwd, Point(lake["lon"], lake["lat"]))
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:96: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out[key] = transform(inv, g)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out["region"] = transform(inv, region)
 ── Mono Lake: 184.19 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 453 days, 453 new
+  Sentinel-2: 456 days, 3 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  S2: 100/453 in 40 s
-  S2: 200/453 in 75 s
-  S2: 300/453 in 100 s
-  S2: 400/453 in 121 s
-  Sentinel-2: 453 scenes on file, 411 with a clear colour reading
-  Landsat: 199 scenes, 199 new
-  LS: 100/199 in 30 s
-  Landsat: 199 scenes on file, 169 with a temperature
-  Mono Lake done in 217 s
+  Sentinel-2: 456 scenes on file, 414 with a clear colour reading
+  Landsat: 201 scenes, 2 new
+  Landsat: 201 scenes on file, 171 with a temperature
+  Mono Lake done in 17 s

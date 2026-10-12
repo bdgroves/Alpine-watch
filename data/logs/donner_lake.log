@@ -13,20 +13,23 @@
    ╰────
 
 ✨ Pixi task (space): python scripts/space.py donner_lake --since 2017-03-01
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:80: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  poly = transform(fwd, lake4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:81: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  pt = transform(fwd, Point(lake["lon"], lake["lat"]))
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:96: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out[key] = transform(inv, g)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out["region"] = transform(inv, region)
 ── Donner Lake: 3.43 km², shore buffer 40/60 m
-  Sentinel-2: 889 days, 889 new
-  S2: 100/889 in 30 s
-  S2: 200/889 in 61 s
+  Sentinel-2: 894 days, 5 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  S2: 300/889 in 88 s
-  S2: 400/889 in 116 s
-  S2: 500/889 in 141 s
-  S2: 600/889 in 166 s
-  S2: 700/889 in 187 s
-  S2: 800/889 in 207 s
-  Sentinel-2: 889 scenes on file, 369 with a clear colour reading
-  Landsat: 196 scenes, 196 new
-  LS: 100/196 in 31 s
+  Sentinel-2: 894 scenes on file, 372 with a clear colour reading
+  Landsat: 196 scenes, 0 new
   Landsat: 196 scenes on file, 151 with a temperature
-  Donner Lake done in 302 s
+  Donner Lake done in 28 s

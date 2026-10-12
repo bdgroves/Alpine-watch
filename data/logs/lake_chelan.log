@@ -13,18 +13,23 @@
    ╰────
 
 ✨ Pixi task (space): python scripts/space.py lake_chelan --since 2017-03-01
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:80: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  poly = transform(fwd, lake4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:81: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  pt = transform(fwd, Point(lake["lon"], lake["lat"]))
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:96: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out[key] = transform(inv, g)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out["region"] = transform(inv, region)
 ── Lake Chelan: 132.32 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 664 days, 664 new
-/home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
-  _rasterize(
-  S2: 100/664 in 33 s
-  S2: 200/664 in 60 s
-  S2: 300/664 in 89 s
-  S2: 400/664 in 111 s
-  S2: 500/664 in 131 s
-  S2: 600/664 in 146 s
-  Sentinel-2: 664 scenes on file, 430 with a clear colour reading
-  Landsat: 171 scenes, 171 new
-  LS: 100/171 in 32 s
-  Landsat: 171 scenes on file, 110 with a temperature
-  Lake Chelan done in 1127 s
+  Sentinel-2: 666 days, 2 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+  Sentinel-2: 666 scenes on file, 431 with a clear colour reading
+  Landsat: 172 scenes, 1 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+  Landsat: 172 scenes on file, 111 with a temperature
+  Lake Chelan done in 23 s

@@ -13,20 +13,21 @@
    ╰────
 
 ✨ Pixi task (space): python scripts/space.py lake_tahoe --since 2017-03-01
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:80: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  poly = transform(fwd, lake4326)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:81: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  pt = transform(fwd, Point(lake["lon"], lake["lat"]))
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:96: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out[key] = transform(inv, g)
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  out["region"] = transform(inv, region)
 ── Lake Tahoe: 498.47 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 888 days, 888 new
-  S2: 100/888 in 27 s
-  S2: 200/888 in 55 s
+  Sentinel-2: 893 days, 5 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/.pixi/envs/default/lib/python3.12/site-packages/rasterio/features.py:381: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _rasterize(
-  S2: 300/888 in 81 s
-  S2: 400/888 in 108 s
-  S2: 500/888 in 131 s
-  S2: 600/888 in 153 s
-  S2: 700/888 in 175 s
-  S2: 800/888 in 194 s
-  Sentinel-2: 888 scenes on file, 726 with a clear colour reading
-  Landsat: 196 scenes, 196 new
-  LS: 100/196 in 30 s
+  Sentinel-2: 893 scenes on file, 730 with a clear colour reading
+  Landsat: 196 scenes, 0 new
   Landsat: 196 scenes on file, 159 with a temperature
-  Lake Tahoe done in 304 s
+  Lake Tahoe done in 25 s
