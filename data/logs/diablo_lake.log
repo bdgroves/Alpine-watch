@@ -22,19 +22,21 @@
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   out["region"] = transform(inv, region)
 ── Diablo Lake: 2.84 km², shore buffer 40/60 m
-  Sentinel-2: 648 days, 3 new
+  Sentinel-2: 653 days, 5 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Sentinel-2: 648 scenes on file, 411 with a clear colour reading
-  Landsat: 162 scenes, 2 new
+/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+  Sentinel-2: 653 scenes on file, 413 with a clear colour reading
+  Landsat: 163 scenes, 2 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
   LS LC08_L2SP_046026_20221101_02_T1: RasterioIOError: '/vsicurl/https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/046/026/LC08_L2SP_046026
-  Landsat: 161 scenes on file, 93 with a temperature
-  Diablo Lake done in 27 s
+  Landsat: 162 scenes on file, 94 with a temperature
+  Diablo Lake done in 19 s

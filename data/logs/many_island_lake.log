@@ -22,16 +22,16 @@
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   out["region"] = transform(inv, region)
 ── Many Island Lake: 0.22 km², shore buffer 40/60 m
-  Sentinel-2: 464 days, 2 new
+  Sentinel-2: 466 days, 2 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Sentinel-2: 464 scenes on file, 19 with a clear colour reading
-  Landsat: 594 scenes, 2 new
+  Sentinel-2: 466 scenes on file, 19 with a clear colour reading
+  Landsat: 596 scenes, 2 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Landsat: 594 scenes on file, 163 with a temperature
+  Landsat: 596 scenes on file, 165 with a temperature
   Many Island Lake done in 24 s

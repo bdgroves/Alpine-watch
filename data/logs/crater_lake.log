@@ -22,14 +22,14 @@
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   out["region"] = transform(inv, region)
 ── Crater Lake: 53.11 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 393 days, 2 new
+  Sentinel-2: 396 days, 3 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Sentinel-2: 393 scenes on file, 350 with a clear colour reading
-  Landsat: 164 scenes, 1 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+  Sentinel-2: 396 scenes on file, 353 with a clear colour reading
+  Landsat: 164 scenes, 0 new
   Landsat: 164 scenes on file, 140 with a temperature
-  Crater Lake done in 14 s
+  Crater Lake done in 11 s
