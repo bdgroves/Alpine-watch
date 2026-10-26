@@ -22,10 +22,10 @@
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   out["region"] = transform(inv, region)
 ── Mono Lake: 184.19 km² (3 km circle), shore buffer 40/60 m
-  Sentinel-2: 457 days, 1 new
+  Sentinel-2: 458 days, 1 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Sentinel-2: 457 scenes on file, 415 with a clear colour reading
+  Sentinel-2: 458 scenes on file, 415 with a clear colour reading
   Landsat: 201 scenes, 0 new
   Landsat: 201 scenes on file, 171 with a temperature
-  Mono Lake done in 13 s
+  Mono Lake done in 9 s
