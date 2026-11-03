@@ -1,6 +1,6 @@
 {
  "meta": {
-  "updated_utc": "2026-10-30T12:26:07+00:00",
+  "updated_utc": "2026-11-03T13:53:32+00:00",
   "source": "Water Quality Portal (USGS, EPA, states) via dataretrieval-python",
   "since": "01-01-2019"
  },
@@ -191,13 +191,13 @@
    "lat": 43.5568,
    "lon": -122.0054,
    "status": "ok",
-   "sample_count": 8959,
-   "last_sample_date": "2026-07-01",
-   "chlorophyll_latest": 1.2,
-   "chlorophyll_date": "2026-07-01",
+   "sample_count": 8971,
+   "last_sample_date": "2026-07-23",
+   "chlorophyll_latest": 58.5,
+   "chlorophyll_date": "2026-07-23",
    "secchi_latest": 5.2,
    "secchi_date": "2026-05-19",
-   "temp_latest": 14.5,
+   "temp_latest": 23.5,
    "phosphorus_latest_mg_l": null,
    "orgs": [
     "OREGONDEQ"
