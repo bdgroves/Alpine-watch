@@ -8,13 +8,13 @@
   "lat": 43.5568,
   "lon": -122.0054,
   "status": "ok",
-  "sample_count": 8971,
-  "last_sample_date": "2026-07-23",
-  "chlorophyll_latest": 58.5,
-  "chlorophyll_date": "2026-07-23",
-  "secchi_latest": 5.2,
-  "secchi_date": "2026-05-19",
-  "temp_latest": 23.5,
+  "sample_count": 8992,
+  "last_sample_date": "2026-09-23",
+  "chlorophyll_latest": 1.0,
+  "chlorophyll_date": "2026-09-01",
+  "secchi_latest": 2.1,
+  "secchi_date": "2026-07-23",
+  "temp_latest": 15.5,
   "phosphorus_latest_mg_l": null,
   "orgs": [
    "OREGONDEQ"
@@ -60,7 +60,7 @@
   {
    "year": 2026,
    "chl": 1.2,
-   "n": 5
+   "n": 11
   }
  ]
 }
