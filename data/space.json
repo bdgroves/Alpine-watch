@@ -1,6 +1,6 @@
 {
  "meta": {
-  "updated_utc": "2026-11-09T17:29:00+00:00",
+  "updated_utc": "2026-11-16T17:00:37+00:00",
   "lakes": 17,
   "sources": [
    "Copernicus Sentinel-2 L2A",
@@ -24,9 +24,9 @@
    "area_km2": 498.472,
    "sampled": "3 km circle",
    "scenes": {
-    "s2": 901,
-    "s2_clear": 473,
-    "landsat": 199,
+    "s2": 904,
+    "s2_clear": 474,
+    "landsat": 200,
     "landsat_temp": 161
    },
    "first_year": 2017,
@@ -34,11 +34,11 @@
    "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-10-15",
-     "hue": 217.61,
-     "fu": 3,
-     "swatch": "#49aad8",
-     "ndci": -0.0857
+     "date": "2026-11-11",
+     "hue": 226.99,
+     "fu": 2,
+     "swatch": "#009dff",
+     "ndci": null
     },
     "temp": {
      "date": "2026-10-14",
@@ -90,9 +90,9 @@
    "area_km2": 5.659,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 900,
-    "s2_clear": 339,
-    "landsat": 199,
+    "s2": 903,
+    "s2_clear": 341,
+    "landsat": 200,
     "landsat_temp": 158
    },
    "first_year": 2017,
@@ -100,10 +100,10 @@
    "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-11-04",
-     "hue": 192.15,
-     "fu": 4,
-     "swatch": "#00b5ba",
+     "date": "2026-11-11",
+     "hue": 211.81,
+     "fu": 3,
+     "swatch": "#57aac9",
      "ndci": null
     },
     "temp": {
@@ -156,9 +156,9 @@
    "area_km2": 3.428,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 902,
+    "s2": 905,
     "s2_clear": 268,
-    "landsat": 199,
+    "landsat": 200,
     "landsat_temp": 153
    },
    "first_year": 2017,
@@ -222,10 +222,10 @@
    "area_km2": 0.712,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 479,
+    "s2": 480,
     "s2_clear": 185,
-    "landsat": 200,
-    "landsat_temp": 145
+    "landsat": 201,
+    "landsat_temp": 146
    },
    "first_year": 2017,
    "freezes": true,
@@ -239,8 +239,8 @@
      "ndci": null
     },
     "temp": {
-     "date": "2026-10-15",
-     "c": 14.2
+     "date": "2026-11-08",
+     "c": 10.4
     }
    },
    "verdict": {
@@ -288,9 +288,9 @@
    "area_km2": 1.691,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 464,
+    "s2": 465,
     "s2_clear": 150,
-    "landsat": 594,
+    "landsat": 598,
     "landsat_temp": 409
    },
    "first_year": 2017,
@@ -354,25 +354,25 @@
    "area_km2": 184.192,
    "sampled": "3 km circle",
    "scenes": {
-    "s2": 460,
-    "s2_clear": 316,
-    "landsat": 202,
-    "landsat_temp": 172
+    "s2": 461,
+    "s2_clear": 317,
+    "landsat": 203,
+    "landsat_temp": 173
    },
    "first_year": 2017,
    "freezes": false,
    "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-11-06",
-     "hue": 64.84,
-     "fu": 12,
-     "swatch": "#a4a446",
-     "ndci": 0.3147
+     "date": "2026-11-11",
+     "hue": 70.32,
+     "fu": 11,
+     "swatch": "#9fa647",
+     "ndci": 0.3694
     },
     "temp": {
-     "date": "2026-10-15",
-     "c": 14.65
+     "date": "2026-11-08",
+     "c": 9.1
     }
    },
    "verdict": {
@@ -420,9 +420,9 @@
    "area_km2": 0.489,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 469,
+    "s2": 470,
     "s2_clear": 32,
-    "landsat": 602,
+    "landsat": 605,
     "landsat_temp": 0
    },
    "first_year": 2017,
@@ -470,9 +470,9 @@
    "area_km2": 0.22,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 469,
+    "s2": 470,
     "s2_clear": 11,
-    "landsat": 602,
+    "landsat": 605,
     "landsat_temp": 0
    },
    "first_year": 2022,
@@ -520,9 +520,9 @@
    "area_km2": 1.352,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 500,
+    "s2": 501,
     "s2_clear": 133,
-    "landsat": 201,
+    "landsat": 202,
     "landsat_temp": 0
    },
    "first_year": 2018,
@@ -582,9 +582,9 @@
    "area_km2": 0.856,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 478,
+    "s2": 479,
     "s2_clear": 126,
-    "landsat": 201,
+    "landsat": 202,
     "landsat_temp": 0
    },
    "first_year": 2018,
@@ -644,8 +644,8 @@
    "area_km2": 132.318,
    "sampled": "3 km circle",
    "scenes": {
-    "s2": 675,
-    "s2_clear": 329,
+    "s2": 676,
+    "s2_clear": 330,
     "landsat": 175,
     "landsat_temp": 114
    },
@@ -654,11 +654,11 @@
    "thermal_ok": true,
    "latest": {
     "colour": {
-     "date": "2026-10-20",
-     "hue": 193.24,
+     "date": "2026-11-14",
+     "hue": 203.03,
      "fu": 4,
-     "swatch": "#88a5a6",
-     "ndci": -0.6
+     "swatch": "#89a4ac",
+     "ndci": -0.1598
     },
     "temp": {
      "date": "2026-10-28",
@@ -776,7 +776,7 @@
    "area_km2": 16.441,
    "sampled": "whole lake",
    "scenes": {
-    "s2": 307,
+    "s2": 308,
     "s2_clear": 129,
     "landsat": 129,
     "landsat_temp": 74
