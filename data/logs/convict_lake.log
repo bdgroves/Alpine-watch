@@ -22,12 +22,10 @@
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:98: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   out["region"] = transform(inv, region)
 ── Convict Lake: 0.71 km², shore buffer 40/60 m
-  Sentinel-2: 480 days, 1 new
+  Sentinel-2: 481 days, 1 new
 /home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
   g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
-  Sentinel-2: 480 scenes on file, 236 with a clear colour reading
-  Landsat: 201 scenes, 1 new
-/home/runner/work/Alpine-watch/Alpine-watch/scripts/space.py:111: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
-  g = transform(Transformer.from_crs("EPSG:4326", f"EPSG:{epsg}", always_xy=True).transform, geom4326)
+  Sentinel-2: 481 scenes on file, 236 with a clear colour reading
+  Landsat: 201 scenes, 0 new
   Landsat: 201 scenes on file, 146 with a temperature
-  Convict Lake done in 15 s
+  Convict Lake done in 14 s
